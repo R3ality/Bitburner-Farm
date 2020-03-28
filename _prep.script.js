@@ -1,18 +1,20 @@
+// Prep the target host by copying over the required files
+
 // Expect target hostname to be provided via argument
 if (args.length != 1) {
     tprint("Unexpected number of arguments provided. Exiting..");
     exit();
 }
-
 var target = args[0];
 
-var pathWeak = "_weak.script";
-var pathGrow = "_grow.script";
-var pathHack = "_hack.script";
+var fileNames = ["_grow.script", "_hack.script", "_weak.script"];
 
-if (scp(pathWeak, "home", target) && scp(pathGrow, "home", target) && scp(pathHack, "home", target)) {
-    print("Finished uploading scripts");
-} else {
-    tprint("Target " + target + ": Failed uploading scripts. Exiting..");
-    exit();
-}
+fileNames.forEach(function(fileName) {
+    if (scp(fileName, "home", target)) {
+        print("Finished uploading: " + fileName);
+    }
+    else {
+        tprint("Target " + target + ": Failed uploading: " + fileName +". Exiting..");
+        exit();
+    }
+});
