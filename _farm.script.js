@@ -12,9 +12,13 @@ var pathHack = "_hack.script";
 var pathPrep = "_prep.script";
 
 // Prep the target
-exec(pathPrep, getHostname(), 1, target);
-while (isRunning(pathPrep, getHostname(), target)) {
-    sleep(2000);
+if (exec(pathPrep, getHostname(), 1, target) > 0) {
+    while (isRunning(pathPrep, getHostname(), target)) {
+        sleep(2000);
+    }
+} else {
+    tprint("Failed to run script: " + pathPrep + ". Exiting..");
+    exit();
 }
 
 var moneyNow;
