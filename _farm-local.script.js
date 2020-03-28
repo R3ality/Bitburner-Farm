@@ -2,7 +2,7 @@ var target = getHostname();
 
 // This probably shouldn't be run on home
 if (target == "home") {
-    tprint("Avoiding execution on target: " + home + ". Exiting..");
+    tprint("Avoiding execution on target: " + target + ". Exiting..");
     exit();
 }
 
