@@ -7,7 +7,7 @@ if (args.length != 1) {
 }
 var target = args[0];
 
-var fileNames = ["_grow.script", "_hack.script", "_weak.script"];
+var fileNames = ["_grow.script", "_hack.script", "_weak.script", "_farm-local.script"];
 
 fileNames.forEach(function(fileName) {
     if (scp(fileName, "home", target)) {
