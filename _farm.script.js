@@ -1,3 +1,8 @@
+// Farming script which manages money, security and RAM usage
+
+// Referenced or copied sources:
+// https://github.com/blankcode/Bitburner-scripts/blob/master/replicator_fork/milk.script
+
 disableLog("sleep");
 disableLog("getServerMoneyAvailable");
 disableLog("getServerSecurityLevel");
@@ -19,7 +24,10 @@ var moneyMax = getServerMaxMoney(target);
 var moneyThreshold = (moneyMax * 0.9); // Do not drain money lower than this threshold before running grow()
 
 // If the server cannot have any money we have nothing to do here
-if (moneyMax < 1) exit();
+if (moneyMax < 1) {
+    tprint("<font color=red>FAILURE:</font> [" + target + "]: getServerMaxMoney() returned 0. Exiting..");
+    exit();
+}
 
 var securityNow;
 var securityMin = getServerMinSecurityLevel(target);
@@ -33,7 +41,7 @@ var ramNeedGrow = getScriptRam(pathGrow);
 var ramNeedHack = getScriptRam(pathHack);
 
 if (ramNeedWeak == 0 || ramNeedGrow == 0 || ramNeedHack == 0) {
-    tprint("<font color=red>ERROR:</font> [" + target + "]: Required RAM for a script returned 0. Exiting..");
+    tprint("<font color=red>FAILURE:</font> [" + target + "]: getScriptRam() 0. Exiting..");
     exit();
 }
 
@@ -42,7 +50,7 @@ var threadCountGrow = Math.floor(ramFree / ramNeedGrow);
 var threadCountHack = Math.floor(ramFree / ramNeedHack);
 
 if (threadCountWeak == 0 || threadCountGrow == 0 || threadCountHack == 0) {
-    tprint("<font color=red>ERROR:</font> [" + target + "]: Thread count for a script returned 0. Exiting..");
+    tprint("<font color=red>FAILURE:</font> [" + target + "]: Thread count for a script returned 0. Exiting..");
     exit();
 }
 

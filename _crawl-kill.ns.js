@@ -29,5 +29,6 @@ export async function main(ns) {
             }
         }
     }
-    ns.tprint("Finished crawling " + (visited.length - 1) + " servers");
+
+    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling " + (visited.length - 1) + " targets");
 }

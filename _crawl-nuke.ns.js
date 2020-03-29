@@ -73,5 +73,5 @@ export async function main(ns) {
         }
     }
 
-    ns.tprint("<font color=cyan>INFORMA:</font> Finished crawling targets: " + (visited.length - 1));
+    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling targets: " + (visited.length - 1));
 }
