@@ -10,14 +10,10 @@ if (!target) {
     }
 }
 
-function formatNum(x) {
-    return x.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
 while (true) {
     var moneyNow = getServerMoneyAvailable(target);
     var securityNow = getServerSecurityLevel(target);
 
-    tprint("<font color=magenta>MONITOR:</font> [" + target + "]: Money: " + formatNum(moneyNow) + " / Security: " + formatNum(securityNow));
+    tprint("<font color=magenta>MONITOR:</font> [" + target + "]: Money: " + nFormat(moneyNow, '0,0.00') + " / Security: " + nFormat(securityNow, '0,0.00'));
     sleep(Math.ceil(getHackTime(target) * 1000));
 }

@@ -60,8 +60,9 @@ if (threadCountWeak == 0 || threadCountGrow == 0 || threadCountHack == 0) {
     exit();
 }
 
-function formatNum(x) {
-    return x.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+function formatNum(n) {
+    //return n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return nFormat(n, '0,0.00'); // use NetScript function instead of custom approach
 }
 
 function getRandom(min, max) {
