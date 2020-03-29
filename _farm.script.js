@@ -37,6 +37,7 @@ if (moneyMax < 1) {
 var securityNow;
 var securityMin = getServerMinSecurityLevel(target);
 var securityThreshold = (securityMin * 1.15); // Do not lower security unless it is lowe than this threshold
+if (target != host) securityThreshold = (securityMin * 2); // Assuming many hosts are focusing this target, raise the threshold
 
 var ram = getServerRam(host);
 var ramFree = ram[0] - ram[1];
@@ -63,25 +64,33 @@ function formatNum(x) {
     return x.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+function getRandom(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+function getExtraSleepTime() {
+    return Math.round(getRandom(1000, 4000)); // Between 1000 and 4000 msec
+}
+
 while (true) {
     moneyNow = getServerMoneyAvailable(target);
     securityNow = getServerSecurityLevel(target);
 
     if (securityNow > securityThreshold) { // If security over threshold
-        print("<font color=cyan>Weakening security while " + formatNum(securityNow) + " > " + formatNum(securityMin) + "</font>");
+        print("<font color=cyan> NOTIFY:</font> Security exceeds threshold: " + formatNum(securityNow) + " > " + formatNum(securityThreshold) + ". Weakening until " + formatNum(securityMin) + "</font>");
         while (getServerSecurityLevel(target) > securityMin) { // Weaken it to minimum level
             exec(pathWeak, host, threadCountWeak, target);
-            sleep(Math.ceil(getWeakenTime(target) * 1000) + 1000); // Sleep 1 extra sec to be safe
+            sleep(Math.ceil(getWeakenTime(target) * 1000) + getExtraSleepTime()); // Add extra sleep time for some variance
         }
     } else if (moneyNow < moneyMax) { // If money is not maxed, grow it until max
         print("<font color=cyan>Growing money while " + formatNum(moneyNow) + " < " + formatNum(moneyMax) + "</font>");
         exec(pathGrow, host, threadCountGrow, target);
-        sleep(Math.ceil(getGrowTime(target) * 1000) + 1000); // Sleep 1 extra sec to be safe
+        sleep(Math.ceil(getGrowTime(target) * 1000) + getExtraSleepTime()); // Add extra sleep time for some variance
     } else { // Otherwise hack the host
-        print("<font color=cyan>Hacking money while " + formatNum(moneyNow) + " < " + formatNum(moneyThreshold) + "</font>");
+        print("<font color=cyan>Hacking money while over threshold: " + formatNum(moneyNow) + " < " + formatNum(moneyThreshold) + "</font>");
         while (getServerMoneyAvailable(target) > moneyThreshold) { // Until money is under threshold
             exec(pathHack, host, threadCountHack, target);
-            sleep(Math.ceil(getHackTime(target) * 1000) + 1000); // Sleep 1 extra sec to be safe
+            sleep(Math.ceil(getHackTime(target) * 1000) + getExtraSleepTime()); // Add extra sleep time for some variance
         }
     }
 }
