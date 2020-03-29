@@ -30,6 +30,7 @@ if (moneyMax < 1) exit();
 
 var securityNow;
 var securityMin = getServerMinSecurityLevel(target);
+var securityThreshold = (securityMin * 1.15); // Do not lower security unless it is lowe than this threshold
 
 var ram = getServerRam(target);
 var ramFree = ram[0] - ram[1];
@@ -48,27 +49,33 @@ var threadCountGrow = Math.floor(ramFree / ramNeedGrow);
 var threadCountHack = Math.floor(ramFree / ramNeedHack);
 
 if (threadCountWeak == 0 || threadCountGrow == 0 || threadCountHack == 0) {
-    tprint("Target " + target + ": Thread count for a script returned 0. Exiting..");
+    tprint("[" + target + "]: Thread count for a script returned 0. Exiting..");
     exit();
 }
 
-var sleepTime;
+function getOutNum(x) {
+    return Math.round(x).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 while (true) {
     moneyNow = getServerMoneyAvailable(target);
     securityNow = getServerSecurityLevel(target);
 
-    if (securityNow > securityMin) {
-        sleepTime = getWeakenTime(target);
-        exec(pathWeak, target, threadCountWeak, target);
-    } else if (moneyNow < moneyMax) {
-        sleepTime = getGrowTime(target);
+    if (securityNow > securityThreshold) { // If security over threshold
+        print("<font color=cyan>Weakening security wile " + securityNow + " > " + securityMin + "</font>");
+        while (getServerSecurityLevel(target) > securityMin) { // Weaken it to minimum level
+            exec(pathWeak, target, threadCountWeak, target);
+            sleep(Math.ceil(getWeakenTime(target) * 1000) + 2000); // Sleep 2 extra sec to be safe
+        }
+    } else if (moneyNow < moneyMax) { // If money is not maxed, grow it until max
+        print("<font color=cyan>Growing money while " + getOutNum(moneyNow) + " < " + getOutNum(moneyMax) + "</font>");
         exec(pathGrow, target, threadCountGrow, target);
-    } else {
-        while (getServerMoneyAvailable(target) > moneyThreshold) {
+        sleep(Math.ceil(getGrowTime(target) * 1000) + 2000); // Sleep 2 extra sec to be safe
+    } else { // Otherwise hack the target
+        print("<font color=cyan>Hacking money while " + getOutNum(moneyNow) + " < " + getOutNum(moneyThreshold) + "</font>");
+        while (getServerMoneyAvailable(target) > moneyThreshold) { // Until money is under threshold
             exec(pathHack, target, threadCountHack, target);
-            sleep(Math.ceil(getHackTime(target) * 1000));
+            sleep(Math.ceil(getHackTime(target) * 1000) + 2000); // Sleep 2 extra sec to be safe
         }
     }
-    sleep(Math.ceil(sleepTime * 1000) + 2000); // Sleep until triggered script should be done. Add extra 2 sec just in case
 }
