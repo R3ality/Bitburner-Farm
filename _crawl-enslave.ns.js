@@ -6,6 +6,7 @@
 // https://github.com/Nolshine/bitburner-scripts/blob/master/spidercrack.ns.js
 
 export async function main(ns) {
+    ns.disableLog("sleep");
 
     // Arrays for visited and planned targets
     let visited = ["home"]; // ADD ANY SERVERS HERE WHICH SHOULD BE SKIPPED
@@ -22,7 +23,7 @@ export async function main(ns) {
 
         // Scan for new targets and mark this one as visited
         let scanned = ns.scan(target);
-        planned = planned.concat(ns.scan(target));
+        planned = planned.concat(scanned);
         visited.push(target);
 
         // If it is rooted, and not yet enslaved, attempt to enslave it

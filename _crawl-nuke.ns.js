@@ -6,6 +6,8 @@
 // https://github.com/Nolshine/bitburner-scripts/blob/master/spidercrack.ns.js
 
 export async function main(ns) {
+    ns.disableLog("sleep");
+
     let crackTools = ["BruteSSH.exe", "FTPCrack.exe", "RelaySMTP.exe", "HTTPWorm.exe", "SQLInject.exe"];
     let crackFuncs = [ns.brutessh, ns.ftpcrack, ns.relaysmtp, ns.httpworm, ns.sqlinject];
 
@@ -30,7 +32,7 @@ export async function main(ns) {
 
         // Scan for new targets and mark this one as visited
         let scanned = ns.scan(target);
-        planned = planned.concat(ns.scan(target));
+        planned = planned.concat(scanned);
         visited.push(target);
 
         let reasons = [];
