@@ -1,14 +1,17 @@
 // Initialize the environment
 
 var fileNames = [
+    "_crawl-enslave.ns",
+    "_crawl-kill.ns",
+    "_crawl-nuke.ns",
+    "_enslave.script",
     "_farm.script",
     "_farm-remote.script",
     "_grow.script",
     "_hack.script",
+    "_manage-hacknet.ns",
     "_prep.script",
-    "_weak.script",
-    "_enslave.script",
-    "_manage-hacknet.ns.js"
+    "_weak.script"
 ];
 
 fileNames.forEach(function(fileName) {
