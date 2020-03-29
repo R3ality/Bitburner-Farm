@@ -15,6 +15,7 @@ var fileNames = [
 ];
 
 fileNames.forEach(function(fileName) {
+    rm(fileName, target); // scp() should overwrite but this did not appear to be working
     if (scp(fileName, "home", target)) {
         print("Finished uploading: " + fileName);
     }
