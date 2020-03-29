@@ -24,5 +24,3 @@ fileNames.forEach(function(fileName) {
         exit();
     }
 });
-
-tprint("<font color=green>Target prepared: " + target + "</font>");
