@@ -1,4 +1,4 @@
-// Prep the target host
+// Prepare the target host
 
 // Expect target hostname to be provided via argument
 if (args.length != 1) {
@@ -25,4 +25,4 @@ fileNames.forEach(function(fileName) {
     }
 });
 
-tprint("<font color=green>Target preparation completed!</font>");
+tprint("<font color=green>Target prepared: " + target + "</font>");

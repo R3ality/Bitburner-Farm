@@ -18,7 +18,8 @@ function runLocalAwait(script, target) { // Run local script and await for it to
     }
 }
 
-runLocalAwait("_prep.script", target); // Prep the target
+if (!hasRootAccess(target)) nuke(target);
+runLocalAwait("_prep.script", target);
 killall(target);
 exec("_farm.script", target, 1, target);
 

@@ -6,7 +6,9 @@ var fileNames = [
     "_grow.script",
     "_hack.script",
     "_prep.script",
-    "_weak.script"
+    "_weak.script",
+    "_enslave.script",
+    "_manage-hacknet.ns.js"
 ];
 
 fileNames.forEach(function(fileName) {
