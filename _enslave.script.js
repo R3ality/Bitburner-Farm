@@ -10,7 +10,7 @@ var target = args[0];
 function runLocalAwait(script, target) { // Run local script and await for it to finish
     if (exec(script, "home", 1, target) > 0) {
         while (isRunning(script, "home", target)) {
-            sleep(2000);
+            sleep(1000);
         }
     } else {
         tprint("<font color=red>ERROR:</font> runAwait(" + script + ", " + target + ") failed!. Exiting..");

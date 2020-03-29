@@ -58,17 +58,17 @@ while (true) {
         print("<font color=cyan>Weakening security while " + formatNum(securityNow) + " > " + formatNum(securityMin) + "</font>");
         while (getServerSecurityLevel(target) > securityMin) { // Weaken it to minimum level
             exec(pathWeak, target, threadCountWeak, target);
-            sleep(Math.ceil(getWeakenTime(target) * 1000) + 2000); // Sleep 2 extra sec to be safe
+            sleep(Math.ceil(getWeakenTime(target) * 1000) + 1000); // Sleep 1 extra sec to be safe
         }
     } else if (moneyNow < moneyMax) { // If money is not maxed, grow it until max
         print("<font color=cyan>Growing money while " + formatNum(moneyNow) + " < " + formatNum(moneyMax) + "</font>");
         exec(pathGrow, target, threadCountGrow, target);
-        sleep(Math.ceil(getGrowTime(target) * 1000) + 2000); // Sleep 2 extra sec to be safe
+        sleep(Math.ceil(getGrowTime(target) * 1000) + 1000); // Sleep 1 extra sec to be safe
     } else { // Otherwise hack the target
         print("<font color=cyan>Hacking money while " + formatNum(moneyNow) + " < " + formatNum(moneyThreshold) + "</font>");
         while (getServerMoneyAvailable(target) > moneyThreshold) { // Until money is under threshold
             exec(pathHack, target, threadCountHack, target);
-            sleep(Math.ceil(getHackTime(target) * 1000) + 2000); // Sleep 2 extra sec to be safe
+            sleep(Math.ceil(getHackTime(target) * 1000) + 1000); // Sleep 1 extra sec to be safe
         }
     }
 }
