@@ -12,8 +12,13 @@ if (!target) {
 
 while (true) {
     var moneyNow = getServerMoneyAvailable(target);
-    var securityNow = getServerSecurityLevel(target);
+    var moneyMax = getServerMaxMoney(target);
+    var moneyDif = moneyMax - moneyNow;
 
-    tprint("<font color=magenta>MONITOR:</font> [" + target + "]: Money: " + nFormat(moneyNow, '0,0.00') + " / Security: " + nFormat(securityNow, '0,0.00'));
+    var securityNow = getServerSecurityLevel(target);
+    var securityMin = getServerMinSecurityLevel(target);
+    var securityDif = securityNow - securityMin;
+
+    tprint("<font color=magenta>MONITOR:</font> [" + target + "]: Money: " + nFormat(moneyNow, '0,0.00') + " (" + nFormat(moneyDif, '0,0.00') + " under max) / Security: " + nFormat(securityNow, '0,0.00') + " (" + nFormat(securityDif, '0,0.00') + " over min)");
     sleep(Math.ceil(getHackTime(target) * 1000));
 }
