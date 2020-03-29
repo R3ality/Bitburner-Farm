@@ -9,10 +9,10 @@ export async function main(ns) {
     let visited = ["home"]; // ADD ANY SERVERS HERE WHICH SHOULD BE SKIPPED
     let planned = ns.scan("home");
 
-    ns.clear("nmap.txt"); // Start with an empty file
+    ns.clear("_nmap.txt"); // Start with an empty file
 
     // Add header row, this is optional
-    ns.write("nmap.txt", "hostname" +
+    ns.write("_nmap.txt", "hostname" +
         ",hasRootAccess" +
         ",getServerRam" +
         ",getServerNumPortsRequired" +
@@ -61,6 +61,8 @@ export async function main(ns) {
             "," + Math.round(timeHack) +
             "," + score +
             "\r\n");
+
+        await ns.sleep(15);
     }
 
     // Determine best server based on the score
@@ -88,8 +90,10 @@ export async function main(ns) {
         };
 
         if (server.isRooted && server.score > bestTargetScore) {
-            bestTargetScore = server.score;
-            bestTargetName = server.hostname;
+            if (server.levelReq <= ns.getHackingLevel()) { // Make sure we have high enough level
+                bestTargetScore = server.score;
+                bestTargetName = server.hostname;
+            }
         }
     }
 
