@@ -1,4 +1,4 @@
-// Download the other relevant scripts
+// Initialize the environment
 
 var fileNames = [
     "_farm.script",

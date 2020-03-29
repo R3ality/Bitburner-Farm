@@ -1,4 +1,4 @@
-// Prep the target host by copying over the required files
+// Prep the target host
 
 // Expect target hostname to be provided via argument
 if (args.length != 1) {
@@ -24,3 +24,5 @@ fileNames.forEach(function(fileName) {
         exit();
     }
 });
+
+tprint("<font color=green>Target preparation completed!</font>");
