@@ -1,5 +1,5 @@
 // Manage the hacknet
-// Used sources:
+// Referenced or copied sources:
 // https://github.com/Nolshine/bitburner-scripts/blob/master/hacknet.ns.js
 
 export async function main(ns) {
@@ -9,65 +9,61 @@ export async function main(ns) {
     ns.disableLog("sleep");
 
     while (true) {
-        // if we have no hacknet nodes, buy one when possible.
+        // If we have no hacknet nodes at all, wait until enough money to buy one
         if (hn.numNodes() === 0) {
             while (ns.getServerMoneyAvailable("home") < hn.getPurchaseNodeCost()) {
                 await ns.sleep(5000);
             }
-            ns.print("<font color=cyan>Purchase first Node!</font>");
+            ns.print("<font color=cyan>Purchase FIRST node!</font>");
             hn.purchaseNode();
-        } else {
-            let nextIteration = false;
-            // otherwise, check if it's cheaper to upgrade existing nodes, or buy new one.
-            let buyCost = hn.getPurchaseNodeCost();
-            for (let i = 0; i < hn.numNodes(); i++) {
-                let stats = hn.getNodeStats(i);
-                if (stats.cores < 16) {
-                    let coreCost = hn.getCoreUpgradeCost(i);
-                    if (coreCost < buyCost) {
-                        // upgrading a core is cheaper than buying a node, upgrade immediately.
-                        while (ns.getServerMoneyAvailable("home") < coreCost) {
-                            await ns.sleep(5000);
-                        }
-                        ns.print("<font color=cyan>Upgrade Core for node " + i + "</font>");
-                        hn.upgradeCore(i);
-                        nextIteration = true;
-                        break;
-                    }
-                }
-                if (stats.ram < 64) {
-                    let ramCost = hn.getRamUpgradeCost(i);
-                    if (ramCost < buyCost) {
-                        while (ns.getServerMoneyAvailable("home") < ramCost) {
-                            await ns.sleep(5000);
-                        }
-                        ns.print("<font color=cyan>Upgrade RAM for node " + i + "</font>");
-                        hn.upgradeRam(i);
-                        nextIteration = true;
-                        break;
-                    }
-                }
-                if (stats.level < 200) {
-                    let levelCost = hn.getLevelUpgradeCost(i);
-                    if (levelCost < buyCost) {
-                        while (ns.getServerMoneyAvailable("home") < levelCost) {
-                            await ns.sleep(5000);
-                        }
-                        ns.print("<font color=cyan>Upgrade Level of node " + i + "</font>");
-                        hn.upgradeLevel(i);
-                        nextIteration = true;
-                        break;
-                    }
-                }
+            continue; // Iterate loop just in case purchase failed
+        }
+
+        let cheapestCost = hn.getPurchaseNodeCost(); // Default to node cost
+        let cheapestNode = null;
+        let cheapestOper = null;
+
+        // Check all operations on all nodes to find the cheapest
+        for (let i = 0; i < hn.numNodes(); i++) {
+            let coreCost = hn.getCoreUpgradeCost(i);
+            if (coreCost < cheapestCost) {
+                cheapestCost = coreCost;
+                cheapestNode = i;
+                cheapestOper = "core";
             }
-            if (!nextIteration) {
-                // couldn't find a cheaper cost than buying, so we buy a new node when possible
-                while (ns.getServerMoneyAvailable("home") < buyCost) {
-                    await ns.sleep(5000);
-                }
-                ns.print("<font color=cyan>Purchase Node " + hn.numNodes() + "</font>");
-                hn.purchaseNode();
+
+            let ramCost = hn.getRamUpgradeCost(i);
+            if (ramCost < cheapestCost) {
+                cheapestCost = ramCost;
+                cheapestNode = i;
+                cheapestOper = "ram";
+            }
+
+            let levelCost = hn.getLevelUpgradeCost(i);
+            if (levelCost < cheapestCost) {
+                cheapestCost = levelCost;
+                cheapestNode = i;
+                cheapestOper = "level";
             }
         }
+
+        // Wait for enough money for whichever operation turned out to be the cheapest
+        while (ns.getServerMoneyAvailable("home") < cheapestCost) {
+            await ns.sleep(5000);
+        }
+
+        if (cheapestNode === null || cheapestOper === null) {
+            // No operation was found to be cheaper, buy new node instead
+            ns.print("<font color=cyan>Purchase hacknet-node-" + hn.numNodes() + "</font>");
+            hn.purchaseNode();
+        } else {
+            // Buy the cheapest upgrade
+            ns.print("<font color=cyan>Upgrade " + cheapestOper.toUpperCase() + " on hacknet-node-" + cheapestNode + "</font>");
+            if (cheapestOper == "core") hn.upgradeCore(cheapestNode);
+            else if (cheapestOper == "ram") hn.upgradeRam(cheapestNode);
+            else if (cheapestOper == "level") hn.upgradeLevel(cheapestNode);
+        }
+
+        await ns.sleep(500); // Sleep before next iteration
     }
 }
