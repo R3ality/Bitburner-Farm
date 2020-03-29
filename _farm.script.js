@@ -12,7 +12,7 @@ var host = getHostname();
 // If available, get target from file. Otherwise default to self
 var target = read("_target.txt");
 if (!target) target = host;
-else tprint("<font color=cyan> NOTIFY:</font> Specific target set: " + target);
+else tprint("<font color=cyan> NOTIFY:</font> [" + host + "]: Specific target set: " + target);
 
 // Avoid targeting some servers
 if (target == "home") {
