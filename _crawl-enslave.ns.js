@@ -25,13 +25,13 @@ export async function main(ns) {
         planned = planned.concat(ns.scan(target));
         visited.push(target);
 
-        // If it is rooted, attempt to enslave it
-        if (ns.hasRootAccess(target)) {
+        // If it is rooted, and not yet enslaved, attempt to enslave it
+        if (ns.hasRootAccess(target) && !ns.isRunning("_farm.script", target)) {
             ns.exec("_enslave.script", "home", 1, target);
 
             // Wait until enslave script is finished
-            while(ns.isRunning("_enslave.script", "home", target)) {
-                await ns.sleep(2000);
+            while (ns.isRunning("_enslave.script", "home", target)) {
+                await ns.sleep(1000);
             }
 
             // Verify results
