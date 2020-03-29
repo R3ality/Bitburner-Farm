@@ -11,6 +11,8 @@ var fileNames = [
 
 fileNames.forEach(function(fileName) {
     rm(fileName); // wget() should overwrite but this did not appear to be working
-    var url = "https://raw.githubusercontent.com/R3ality/Bitburner-Farm/master/" + fileName + ".js";
+    var url = "https://raw.githubusercontent.com/R3ality/bitburner-scripts/master/" + fileName + ".js";
     wget(url, fileName);
 });
+
+tprint("<font color=green>Environment initialization completed!</font>");
