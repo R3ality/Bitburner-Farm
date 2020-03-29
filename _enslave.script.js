@@ -7,13 +7,13 @@ if (args.length != 1) {
 }
 var target = args[0];
 
-function runLocalAwait(script, target) { // Run local script and await for it to finish
-    if (exec(script, "home", 1, target) > 0) {
-        while (isRunning(script, "home", target)) {
+function runLocalAwait(script, arg) { // Run local script and await for it to finish
+    if (exec(script, "home", 1, arg) > 0) {
+        while (isRunning(script, "home", arg)) {
             sleep(1000);
         }
     } else {
-        tprint("<font color=red>ERROR:</font> runAwait(" + script + ", " + target + ") failed!. Exiting..");
+        tprint("<font color=red>ERROR:</font> runLocalAwait(" + script + ", " + arg + ") failed!. Exiting..");
         exit();
     }
 }
