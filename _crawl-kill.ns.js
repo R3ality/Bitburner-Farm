@@ -12,17 +12,22 @@ export async function main(ns) {
 
     // loop while there are nodes left in in the 'nodes' array,
     // which would mean its 'length' property isn't zero
-    while (nodes.length !== 0){
+    while (nodes.length !== 0) {
         // remove the last server from 'nodes' and store it separately
         let server = nodes.pop();
         // is the node visited?
         if (!visited.includes(server)) {
             // node not visited, so we scan it and add the results to 'nodes'.
-            // we also add it to visited, and run killall() on it.
-            ns.tprint("Killing all scripts in: " + server);
+            // we also add it to visited
             nodes = nodes.concat(ns.scan(server));
             visited.push(server);
-            ns.killall(server);
+
+            // if any scripts are running on it, run killall().
+            if (ns.getServerRam(server)[1] > 0) {
+                ns.tprint("Killing all scripts in: " + server);
+                ns.killall(server);
+            }
         }
     }
+    ns.tprint("Finished crawling " + (visited.length - 1) + " servers");
 }

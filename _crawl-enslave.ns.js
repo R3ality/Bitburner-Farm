@@ -25,17 +25,23 @@ export async function main(ns) {
         planned = planned.concat(ns.scan(target));
         visited.push(target);
 
-        // Attempt to enslave it
-        ns.exec("_enslave.script", "home", 1, target)
+        // If it is rooted, attempt to enslave it
+        if (ns.hasRootAccess(target)) {
+            ns.exec("_enslave.script", "home", 1, target);
 
-        // Wait for a little while and verify results
-        await ns.sleep(2000);
-        if (ns.isRunning("_farm.script", target)) {
-            ns.tprint("<font color=green>SUCCESS:</font> Target enslaved: " + target);
-        } else {
-            ns.tprint("<font color=red>FAILURE:</font> Enslaving failed: " + target);
+            // Wait until enslave script is finished
+            while(ns.isRunning("_enslave.script", "home", target)) {
+                await ns.sleep(2000);
+            }
+
+            // Verify results
+            if (ns.isRunning("_farm.script", target)) {
+                ns.tprint("<font color=green>SUCCESS:</font> Target enslaved: " + target);
+            } else {
+                ns.tprint("<font color=red>FAILURE:</font> Enslaving failed: " + target);
+            }
         }
     }
 
-    ns.tprint("<font color=cyan>INFORMA:</font> Finished crawling targets: " + (visited.length - 1));
+    ns.tprint("<font color=cyan>INFORMA:</font> Finished crawling " + (visited.length - 1) + " targets");
 }

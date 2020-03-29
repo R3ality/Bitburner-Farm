@@ -23,8 +23,6 @@ if (hasRootAccess(target)) {
     runLocalAwait("_prep.script", target);
     killall(target);
     exec("_farm.script", target, 1);
-
-    tprint("<font color=green>SUCCESS:</font> Target enslaved: " + target);
 }
 else {
     tprint("<font color=red>FAILURE:</font> Target is not rooted: " + target);
