@@ -1,4 +1,6 @@
 disableLog("sleep");
+disableLog("getServerMoneyAvailable");
+disableLog("getServerSecurityLevel");
 
 var target = getHostname();
 

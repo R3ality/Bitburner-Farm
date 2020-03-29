@@ -1,4 +1,6 @@
 disableLog("sleep");
+disableLog("getServerMoneyAvailable");
+disableLog("getServerSecurityLevel");
 
 // Expect target hostname to be provided via argument
 if (args.length != 1) {
