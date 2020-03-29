@@ -52,7 +52,9 @@ export async function main(ns) {
 
         // If there were reasons for skipping it, jump to next iteration
         if (reasons.length > 0) {
-            ns.tprint("<font color=yellow>WARNING:</font> Skipping target: " + target + " (" + reasons.join(", ") + ")");
+            let reasonsString = reasons.join(", ");
+            if (reasonsString == 'Target already rooted') continue; // Optional. If this is the only reason, do not warn
+            ns.tprint("<font color=yellow>WARNING:</font> Skipping target: " + target + " (" + reasonsString + ")");
             continue;
         }
 
