@@ -17,4 +17,4 @@ fileNames.forEach(function(fileName) {
     wget(url, fileName);
 });
 
-tprint("<font color=green>Environment initialization completed!</font>");
+tprint("<font color=green>SUCCESS:</font> Environment initialization completed!");

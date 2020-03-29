@@ -1,4 +1,5 @@
 // Manage the hacknet
+
 // Referenced or copied sources:
 // https://github.com/Nolshine/bitburner-scripts/blob/master/hacknet.ns.js
 

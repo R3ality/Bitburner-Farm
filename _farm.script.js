@@ -6,7 +6,7 @@ var target = getHostname();
 
 // This probably shouldn't be run on home
 if (target == "home") {
-    tprint("Avoiding execution on target: " + target + ". Exiting..");
+    tprint("<font color=red>ERROR:</font> Avoiding execution on target: " + target + ". Exiting..");
     exit();
 }
 
@@ -33,7 +33,7 @@ var ramNeedGrow = getScriptRam(pathGrow);
 var ramNeedHack = getScriptRam(pathHack);
 
 if (ramNeedWeak == 0 || ramNeedGrow == 0 || ramNeedHack == 0) {
-    tprint("[" + target + "]: Required RAM for a script returned 0. Exiting..");
+    tprint("<font color=red>ERROR:</font> [" + target + "]: Required RAM for a script returned 0. Exiting..");
     exit();
 }
 
@@ -42,7 +42,7 @@ var threadCountGrow = Math.floor(ramFree / ramNeedGrow);
 var threadCountHack = Math.floor(ramFree / ramNeedHack);
 
 if (threadCountWeak == 0 || threadCountGrow == 0 || threadCountHack == 0) {
-    tprint("[" + target + "]: Thread count for a script returned 0. Exiting..");
+    tprint("<font color=red>ERROR:</font> [" + target + "]: Thread count for a script returned 0. Exiting..");
     exit();
 }
 
@@ -55,7 +55,7 @@ while (true) {
     securityNow = getServerSecurityLevel(target);
 
     if (securityNow > securityThreshold) { // If security over threshold
-        print("<font color=cyan>Weakening security wile " + formatNum(securityNow) + " > " + formatNum(securityMin) + "</font>");
+        print("<font color=cyan>Weakening security while " + formatNum(securityNow) + " > " + formatNum(securityMin) + "</font>");
         while (getServerSecurityLevel(target) > securityMin) { // Weaken it to minimum level
             exec(pathWeak, target, threadCountWeak, target);
             sleep(Math.ceil(getWeakenTime(target) * 1000) + 2000); // Sleep 2 extra sec to be safe

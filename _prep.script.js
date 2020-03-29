@@ -2,7 +2,7 @@
 
 // Expect target hostname to be provided via argument
 if (args.length != 1) {
-    tprint("Unexpected number of arguments provided. Exiting..");
+    tprint("<font color=red>ERROR:</font> Unexpected number of arguments provided. Exiting..");
     exit();
 }
 var target = args[0];
@@ -20,7 +20,7 @@ fileNames.forEach(function(fileName) {
         print("Finished uploading: " + fileName);
     }
     else {
-        tprint("Target " + target + ": Failed uploading: " + fileName +". Exiting..");
+        tprint("<font color=red>ERROR:</font> Target " + target + ": Failed uploading: " + fileName +". Exiting..");
         exit();
     }
 });
