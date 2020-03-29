@@ -7,7 +7,6 @@ var fileNames = [
     "_crawl-nuke.ns",
     "_enslave.script",
     "_farm.script",
-    "_farm-remote.script",
     "_grow.script",
     "_hack.script",
     "_manage-hacknet.ns",
