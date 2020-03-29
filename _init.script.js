@@ -3,6 +3,7 @@
 var fileNames = [
     "_crawl-enslave.ns",
     "_crawl-kill.ns",
+    "_crawl-nmap.ns",
     "_crawl-nuke.ns",
     "_enslave.script",
     "_farm.script",
