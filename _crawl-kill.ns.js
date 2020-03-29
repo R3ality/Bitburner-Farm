@@ -26,9 +26,9 @@ export async function main(ns) {
             // if any scripts are running on it, run killall().
             if (ns.getServerRam(server)[1] > 0) {
 
-                if (args.length > 0) {
-                    ns.tprint("Killing script " + args[0] + " on: " + server);
-                    ns.scriptKill(args[0], server);
+                if (ns.args.length > 0) {
+                    ns.tprint("Killing script " + ns.args[0] + " on: " + server);
+                    ns.scriptKill(ns.args[0], server);
                 } else {
                     ns.tprint("Killing all scripts on: " + server);
                     ns.killall(server);
