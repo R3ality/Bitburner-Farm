@@ -11,7 +11,7 @@ var fileNames = [
     "_grow.script",
     "_hack.script",
     "_weak.script",
-    "_farm-local.script"
+    "_farm.script"
 ];
 
 fileNames.forEach(function(fileName) {

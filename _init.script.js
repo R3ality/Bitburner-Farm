@@ -2,7 +2,7 @@
 
 var fileNames = [
     "_farm.script",
-    "_farm-local.script",
+    "_farm-remote.script",
     "_grow.script",
     "_hack.script",
     "_prep.script",
