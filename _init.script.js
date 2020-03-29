@@ -10,6 +10,7 @@ var fileNames = [
     "_grow.script",
     "_hack.script",
     "_manage-hacknet.ns",
+    "_monitor.ns",
     "_prep.script",
     "_weak.script"
 ];
