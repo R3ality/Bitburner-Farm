@@ -58,7 +58,7 @@ if (threadCountWeak == 0 || threadCountGrow == 0 || threadCountHack == 0) {
 }
 
 function formatNum(x) {
-    return Math.round(x).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 while (true) {
