@@ -1,4 +1,5 @@
 // Crawl all servers and call killall()
+// Or if arg[0] is specified as a script name, kill that instead
 
 // Referenced or copied sources:
 // https://raw.githubusercontent.com/Nolshine/bitburner-scripts/master/crawlkill.ns.js
@@ -24,8 +25,15 @@ export async function main(ns) {
 
             // if any scripts are running on it, run killall().
             if (ns.getServerRam(server)[1] > 0) {
-                ns.tprint("Killing all scripts in: " + server);
-                ns.killall(server);
+
+                if (args.length > 0) {
+                    ns.tprint("Killing script " + args[0] + " on: " + server);
+                    ns.scriptKill(args[0], server);
+                } else {
+                    ns.tprint("Killing all scripts on: " + server);
+                    ns.killall(server);
+                }
+
             }
         }
     }
