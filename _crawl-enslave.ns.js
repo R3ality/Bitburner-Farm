@@ -11,6 +11,7 @@ export async function main(ns) {
     // Arrays for visited and planned targets
     let visited = ["home"]; // ADD ANY SERVERS HERE WHICH SHOULD BE SKIPPED
     let planned = ns.scan("home");
+    let enslaved = 0;
 
     while (planned.length > 0) {
         let target = planned.pop();
@@ -26,7 +27,6 @@ export async function main(ns) {
         planned = planned.concat(scanned);
         visited.push(target);
 
-        let enslaved = 0;
         // If it is rooted, and has ram...
         if (ns.hasRootAccess(target) && ns.getServerRam(target)[0] != 0) {
             // ...and not yet enslaved, attempt to enslave it
