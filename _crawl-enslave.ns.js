@@ -26,23 +26,29 @@ export async function main(ns) {
         planned = planned.concat(scanned);
         visited.push(target);
 
-        // If it is rooted, and not yet enslaved, attempt to enslave it
-        if (ns.hasRootAccess(target) && !ns.isRunning("_farm.script", target)) {
-            ns.exec("_enslave.script", "home", 1, target);
+        let enslaved = 0;
+        // If it is rooted, and has ram...
+        if (ns.hasRootAccess(target) && ns.getServerRam(target)[0] != 0) {
+            // ...and not yet enslaved, attempt to enslave it
+            if (!ns.isRunning("_farm.script", target)) {
 
-            // Wait until enslave script is finished
-            while (ns.isRunning("_enslave.script", "home", target)) {
-                await ns.sleep(1000);
-            }
+                ns.exec("_enslave.script", "home", 1, target);
 
-            // Verify results
-            if (ns.isRunning("_farm.script", target)) {
-                ns.tprint("<font color=green>SUCCESS:</font> Target enslaved: " + target);
-            } else {
-                ns.tprint("<font color=red>FAILURE:</font> Enslaving failed: " + target);
+                // Wait until enslave script is finished
+                while (ns.isRunning("_enslave.script", "home", target)) {
+                    await ns.sleep(1000);
+                }
+
+                // Verify results
+                if (ns.isRunning("_farm.script", target)) {
+                    enslaved++;
+                    ns.tprint("<font color=green>SUCCESS:</font> Target enslaved: " + target);
+                } else {
+                    ns.tprint("<font color=red>FAILURE:</font> Enslaving failed: " + target);
+                }
             }
         }
     }
 
-    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling " + (visited.length - 1) + " targets");
+    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling " + (visited.length - 1) + " targets. Enslaved " + enslaved);
 }
