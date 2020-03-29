@@ -10,9 +10,9 @@ disableLog("getServerSecurityLevel");
 var host = getHostname();
 
 // If available, get target from file. Otherwise default to self
-let target = ns.read("_target.txt");
+var target = read("_target.txt");
 if (!target) target = host;
-else ns.tprint("<font color=cyan> NOTIFY:</font> Specific target set: " + target);
+else tprint("<font color=cyan> NOTIFY:</font> Specific target set: " + target);
 
 // Avoid targeting some servers
 if (target == "home") {
@@ -25,17 +25,17 @@ var pathGrow = "_grow.script";
 var pathHack = "_hack.script";
 
 var moneyNow;
-var moneyMax = getServerMaxMoney(host);
+var moneyMax = getServerMaxMoney(target);
 var moneyThreshold = (moneyMax * 0.9); // Do not drain money lower than this threshold before running grow()
 
 // If the server cannot have any money we have nothing to do here
 if (moneyMax < 1) {
-    tprint("<font color=red>FAILURE:</font> [" + host + "]: getServerMaxMoney() returned 0. Exiting..");
+    tprint("<font color=red>FAILURE:</font> [" + host + "]: getServerMaxMoney(" + target + ") returned 0. Exiting..");
     exit();
 }
 
 var securityNow;
-var securityMin = getServerMinSecurityLevel(host);
+var securityMin = getServerMinSecurityLevel(target);
 var securityThreshold = (securityMin * 1.15); // Do not lower security unless it is lowe than this threshold
 
 var ram = getServerRam(host);
@@ -64,24 +64,24 @@ function formatNum(x) {
 }
 
 while (true) {
-    moneyNow = getServerMoneyAvailable(host);
-    securityNow = getServerSecurityLevel(host);
+    moneyNow = getServerMoneyAvailable(target);
+    securityNow = getServerSecurityLevel(target);
 
     if (securityNow > securityThreshold) { // If security over threshold
         print("<font color=cyan>Weakening security while " + formatNum(securityNow) + " > " + formatNum(securityMin) + "</font>");
-        while (getServerSecurityLevel(host) > securityMin) { // Weaken it to minimum level
+        while (getServerSecurityLevel(target) > securityMin) { // Weaken it to minimum level
             exec(pathWeak, host, threadCountWeak, target);
-            sleep(Math.ceil(getWeakenTime(host) * 1000) + 1000); // Sleep 1 extra sec to be safe
+            sleep(Math.ceil(getWeakenTime(target) * 1000) + 1000); // Sleep 1 extra sec to be safe
         }
     } else if (moneyNow < moneyMax) { // If money is not maxed, grow it until max
         print("<font color=cyan>Growing money while " + formatNum(moneyNow) + " < " + formatNum(moneyMax) + "</font>");
         exec(pathGrow, host, threadCountGrow, target);
-        sleep(Math.ceil(getGrowTime(host) * 1000) + 1000); // Sleep 1 extra sec to be safe
+        sleep(Math.ceil(getGrowTime(target) * 1000) + 1000); // Sleep 1 extra sec to be safe
     } else { // Otherwise hack the host
         print("<font color=cyan>Hacking money while " + formatNum(moneyNow) + " < " + formatNum(moneyThreshold) + "</font>");
-        while (getServerMoneyAvailable(host) > moneyThreshold) { // Until money is under threshold
+        while (getServerMoneyAvailable(target) > moneyThreshold) { // Until money is under threshold
             exec(pathHack, host, threadCountHack, target);
-            sleep(Math.ceil(getHackTime(host) * 1000) + 1000); // Sleep 1 extra sec to be safe
+            sleep(Math.ceil(getHackTime(target) * 1000) + 1000); // Sleep 1 extra sec to be safe
         }
     }
 }
