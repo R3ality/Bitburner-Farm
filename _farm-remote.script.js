@@ -1,3 +1,5 @@
+disableLog("sleep");
+
 // Expect target hostname to be provided via argument
 if (args.length != 1) {
     tprint("Unexpected number of arguments provided. Exiting..");
