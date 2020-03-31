@@ -5,36 +5,37 @@
 // https://raw.githubusercontent.com/Nolshine/bitburner-scripts/master/crawlkill.ns.js
 
 export async function main(ns) {
-    // an array to store visited nodes, so we don't keep scanning them forever.
+    // Arrays for visited and planned targets
     let visited = ["home"]; // ADD ANY SERVERS HERE WHICH SHOULD BE SKIPPED
-    // an array to store nodes that we discovered that have yet to be scanned AKA visited.
-    // this array will be initialized to have all servers reachable from 'home' in it.
-    let nodes = ns.scan("home");
+    visited.concat(getPurchasedServers()); // Ignore our purchased nodes as well
+    let planned = ns.scan("home");
 
-    // loop while there are nodes left in in the 'nodes' array,
-    // which would mean its 'length' property isn't zero
-    while (nodes.length !== 0) {
-        // remove the last server from 'nodes' and store it separately
-        let server = nodes.pop();
-        // is the node visited?
-        if (!visited.includes(server)) {
-            // node not visited, so we scan it and add the results to 'nodes'.
-            // we also add it to visited
-            nodes = nodes.concat(ns.scan(server));
-            visited.push(server);
+    while (planned.length > 0) {
+        let target = planned.pop();
 
-            // if any scripts are running on it, run killall().
-            if (ns.getServerRam(server)[1] > 0) {
+        // If it is already visited, ignore it and jump to next iteration
+        if (visited.includes(target)) {
+            ns.print("<font color=cyan>Ignoring target:</font> " + target);
+            continue;
+        }
 
-                if (ns.args.length > 0) {
-                    ns.tprint("Killing script " + ns.args[0] + " on: " + server);
-                    ns.scriptKill(ns.args[0], server);
-                } else {
-                    ns.tprint("Killing all scripts on: " + server);
-                    ns.killall(server);
-                }
+        // Scan for new targets and mark this one as visited
+        let scanned = ns.scan(target);
+        planned = planned.concat(scanned);
+        visited.push(target);
 
+        // If any scripts are running on it, run killall().
+        if (ns.getServerRam(target)[1] > 0) {
+
+            // Accept argument in case a specific script needs to be killed
+            if (ns.args.length > 0) {
+                ns.tprint("Killing script " + ns.args[0] + " on: " + target);
+                ns.scriptKill(ns.args[0], target);
+            } else {
+                ns.tprint("Killing all scripts on: " + target);
+                ns.killall(target);
             }
+
         }
     }
 
