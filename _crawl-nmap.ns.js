@@ -97,11 +97,13 @@ export async function main(ns) {
         }
     }
 
-    // Write best target to file
-    ns.clear("_target.txt");
-    ns.write("_target.txt", bestTargetName);
+    // Write best target to file (if found)
+    ns.rm("_target.txt");
+    if (bestTargetName) {
+        ns.write("_target.txt", bestTargetName);
+    }
 
-    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling " + (visited.length - 1) + " targets. See output file for details. Best rooted target: " + bestTargetName);
+    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling " + (visited.length - 1) + " targets. See output file for details. Best rooted target: " + (bestTargetName ? bestTargetName : "n/a"));
 }
 
 function parseBoolean(str) {

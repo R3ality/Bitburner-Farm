@@ -13,3 +13,5 @@ for (var i = 0; i < servers.length; i++) {
         String("           " + nFormat(ram[0], '0,0')).slice(-9) +
         " GB (free)");
 }
+
+tprint("<font color=cyan> NOTIFY:</font> Finished listing " + servers.length + " nodes");

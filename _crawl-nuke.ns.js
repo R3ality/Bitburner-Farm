@@ -20,6 +20,7 @@ export async function main(ns) {
     // Arrays for visited and planned targets
     let visited = ["home"]; // ADD ANY SERVERS HERE WHICH SHOULD BE SKIPPED
     let planned = ns.scan("home");
+    let nuked = 0;
 
     while (planned.length > 0) {
         let target = planned.pop();
@@ -37,7 +38,7 @@ export async function main(ns) {
 
         let reasons = [];
         let crackRequired = ns.getServerNumPortsRequired(target);
-        let levelRequired = ns.getServerSecurityLevel(target);
+        let levelRequired = ns.getServerRequiredHackingLevel(target);
 
         // Check if target is eligible
         if (ns.hasRootAccess(target)) reasons.push("Target already rooted");
@@ -69,11 +70,12 @@ export async function main(ns) {
         // Wait for a little while and verify results
         await ns.sleep(1000);
         if (ns.hasRootAccess(target)) {
+            nuked++;
             ns.tprint("<font color=green>SUCCESS:</font> Target rooted: " + target);
         } else {
             ns.tprint("<font color=red>FAILURE:</font> Rooting failed: " + target);
         }
     }
 
-    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling targets: " + (visited.length - 1));
+    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling targets: " + (visited.length - 1) + ". Nuked " + nuked);
 }
