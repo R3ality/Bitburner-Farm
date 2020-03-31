@@ -46,7 +46,7 @@ else {
 }
 
 var name = "node"; // Prefix for server names. Numbers will be added automatically (eg. pserv-4)
-var confirm = true; // If purchases should be confirmed with user
+var confirm = false; // If purchases should be confirmed with user
 
 // Return nearest smaller power of 2 for the specified number
 function getNearestSmallerPow2(n) {
@@ -67,7 +67,7 @@ function getWeakestServer(servers) {
     for (var i = 0; i < servers.length; i++) {
         var serverName = servers[i];
         var serverRam = getServerRam(serverName)[0];
-        if (!weakestRam || serverRam < weakestRam) {
+        if (!weakest.ram || serverRam < weakest.ram) {
             weakest.hostname = serverName;
             weakest.ram = serverRam;
         }
@@ -75,12 +75,26 @@ function getWeakestServer(servers) {
     return weakest;
 }
 
+// Get next free server name index
+function getFreeServerIndex(servers) {
+    var indices = [];
+    for (var i = 0; i < servers.length; i++) {
+        var index = parseInt(servers[i].split("-")[1]);
+        indices.push(index);
+    }
+
+    for (var i = 0; i < servers.length; i++) {
+        if (indices.includes(i)) continue;
+        else return i;
+    }
+}
+
 while (true) {
     var purchaseRam = getMaxAffordableRamAmount();
     if (ramLimit && purchaseRam > ramLimit) purchaseRam = ramLimit; // If ram limit is set, do not exceed it
     var purchaseCost = purchaseRam * costPerEachGb;
     var servers = getPurchasedServers();
-    var purchaseName = name + "-" + servers.length;
+    var purchaseName = name + "-" + getFreeServerIndex(servers);
 
     // If planend server is weaker than home, do not purchase
     if (purchaseRam < getServerRam("home")[0]) {
