@@ -39,6 +39,11 @@ if (args.length > 0) {
     ramLimit = getNearestSmallerPow2(ramLimit + 1); // Make sure its a power of 2
     tprint("<font color=cyan> NOTIFY:</font> Ram limit set to " + ramLimit);
 }
+else {
+    if (!prompt("Are your sure you want to continue without a RAM limit ?")) {
+        exit();
+    }
+}
 
 var name = "node"; // Prefix for server names. Numbers will be added automatically (eg. pserv-4)
 var confirm = true; // If purchases should be confirmed with user
