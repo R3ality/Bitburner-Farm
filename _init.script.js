@@ -23,7 +23,7 @@ var fileNames = [
 ];
 
 for (var i = 0; i < fileNames.length; i++) {
-    var file = fileNames[i]
+    var file = fileNames[i];
     rm(file);
     if (cleanOnly) continue;
     var url = "https://raw.githubusercontent.com/R3ality/bitburner-scripts/master/" + file + ".js";
