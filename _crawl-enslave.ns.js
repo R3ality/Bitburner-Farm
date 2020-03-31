@@ -8,17 +8,17 @@
 export async function main(ns) {
     ns.disableLog("sleep");
 
-    // Arrays for visited and planned targets
-    let visited = ["home"]; // ADD ANY SERVERS HERE WHICH SHOULD BE SKIPPED
-    visited.concat(ns.getPurchasedServers()); // Ignore our purchased nodes as well
+    // Arrays for ignored, visited and planned targets
+    let ignored = ["home"]; // ADD ANY SERVERS HERE WHICH SHOULD BE SKIPPED
+    ignored.concat(ns.getPurchasedServers()); // Ignore our purchased nodes as well
+    let visited = [];
     let planned = ns.scan("home");
-    let enslaved = 0;
 
     while (planned.length > 0) {
         let target = planned.pop();
 
-        // If it is already visited, ignore it and jump to next iteration
-        if (visited.includes(target)) {
+        // If it is ignored or already visited, skip it and jump to next iteration
+        if (ignored.includes(target) || visited.includes(target)) {
             ns.print("<font color=cyan>Ignoring target:</font> " + target);
             continue;
         }

@@ -17,17 +17,17 @@ export async function main(ns) {
         if (ns.fileExists(tool, "home")) crackCount++;
     });
 
-    // Arrays for visited and planned targets
-    let visited = ["home"]; // ADD ANY SERVERS HERE WHICH SHOULD BE SKIPPED
+    // Arrays for ignored, visited and planned targets
+    let ignored = ["home"]; // ADD ANY SERVERS HERE WHICH SHOULD BE SKIPPED
     // No need to add our purchased nodes since we are checking for hasRootAccess() below
+    let visited = [];
     let planned = ns.scan("home");
-    let nuked = 0;
 
     while (planned.length > 0) {
         let target = planned.pop();
 
-        // If it is already visited, ignore it and jump to next iteration
-        if (visited.includes(target)) {
+        // If it is ignored or already visited, skip it and jump to next iteration
+        if (ignored.includes(target) || visited.includes(target)) {
             ns.print("<font color=cyan>Ignoring target:</font> " + target);
             continue;
         }
