@@ -14,12 +14,13 @@ var fileNames = [
     "_farm.script",
     "_grow.script",
     "_hack.script",
-    "_manage-hacknet.ns",
-    "_manage-nodes.script",
+    "_hacknet-manage.ns",
     "_monitor.script",
+    "_node-list.script",
+    "_node-purchase.script",
     "_prep.script",
-    "program-manager.ns",
-    "_weak.script",
+    "_program-purchase.ns",
+    "_weak.script"
 ];
 
 for (var i = 0; i < fileNames.length; i++) {
