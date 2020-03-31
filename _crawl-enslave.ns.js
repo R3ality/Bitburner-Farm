@@ -10,6 +10,7 @@ export async function main(ns) {
 
     // Arrays for visited and planned targets
     let visited = ["home"]; // ADD ANY SERVERS HERE WHICH SHOULD BE SKIPPED
+    visited.concat(getPurchasedServers()); // Ignore our purchased nodes as well
     let planned = ns.scan("home");
     let enslaved = 0;
 
