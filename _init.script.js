@@ -1,5 +1,9 @@
 // Initialize the environment
 
+// Accept an argument to only clean existing scripts without downloading new ones
+var cleanOnly = false;
+if (args.length > 0) cleanOnly = true;
+
 var fileNames = [
     "_crawl-enslave.ns",
     "_crawl-fetch.ns",
@@ -18,10 +22,12 @@ var fileNames = [
     "_weak.script",
 ];
 
-fileNames.forEach(function(fileName) {
-    rm(fileName); // wget() should overwrite but this did not appear to be working
-    var url = "https://raw.githubusercontent.com/R3ality/bitburner-scripts/master/" + fileName + ".js";
+for (var i = 0; i < fileNames.length; i++) {
+    var file = fileNames[i]
+    rm(file);
+    if (cleanOnly) continue;
+    var url = "https://raw.githubusercontent.com/R3ality/bitburner-scripts/master/" + file + ".js";
     wget(url, fileName);
-});
+}
 
 tprint("<font color=green>SUCCESS:</font> Environment initialization completed!");
