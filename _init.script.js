@@ -27,7 +27,7 @@ for (var i = 0; i < fileNames.length; i++) {
     rm(file);
     if (cleanOnly) continue;
     var url = "https://raw.githubusercontent.com/R3ality/bitburner-scripts/master/" + file + ".js";
-    wget(url, fileName);
+    wget(url, file);
 }
 
 tprint("<font color=green>SUCCESS:</font> Environment initialization completed!");
