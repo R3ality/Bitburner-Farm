@@ -2,6 +2,7 @@
 
 var fileNames = [
     "_crawl-enslave.ns",
+    "_crawl-fetch.ns",
     "_crawl-kill.ns",
     "_crawl-nmap.ns",
     "_crawl-nuke.ns",
@@ -10,9 +11,11 @@ var fileNames = [
     "_grow.script",
     "_hack.script",
     "_manage-hacknet.ns",
-    "_monitor.ns",
+    "_manage-nodes.ns",
+    "_monitor.script",
     "_prep.script",
-    "_weak.script"
+    "program-manager.ns",
+    "_weak.script",
 ];
 
 fileNames.forEach(function(fileName) {
