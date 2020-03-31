@@ -1,6 +1,6 @@
 // Proram manager for purchasing software tools off the darkweb
 
-// Referenced or copied sources:
+// Inspiration, reference or copied sources:
 // https://github.com/MercuriusXeno/BitBurnerScripts/blob/master/program-manager.js
 
 export async function main(ns) {

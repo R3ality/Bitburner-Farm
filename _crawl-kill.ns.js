@@ -1,7 +1,7 @@
 // Crawl all servers and call killall()
 // Or if arg[0] is specified as a script name, kill that instead
 
-// Referenced or copied sources:
+// Inspiration, reference or copied sources:
 // https://raw.githubusercontent.com/Nolshine/bitburner-scripts/master/crawlkill.ns.js
 
 export async function main(ns) {

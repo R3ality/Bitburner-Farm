@@ -1,6 +1,6 @@
 // Crawl all servers and map the whole network to file nmap.txt
 
-// Referenced or copied sources:
+// Inspiration, reference or copied sources:
 // https://www.reddit.com/r/Bitburner/comments/7lmbpa/scripts_using_files/
 // https://raw.githubusercontent.com/Nolshine/bitburner-scripts/master/crawlkill.ns.js
 

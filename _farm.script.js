@@ -1,6 +1,6 @@
 // Farming script which manages money, security and RAM usage
 
-// Referenced or copied sources:
+// Inspiration, reference or copied sources:
 // https://github.com/blankcode/Bitburner-scripts/blob/master/replicator_fork/milk.script
 
 disableLog("sleep");

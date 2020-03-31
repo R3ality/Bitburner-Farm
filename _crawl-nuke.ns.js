@@ -1,6 +1,6 @@
 // Crawl all servers and nuke any which are possible, output all skipped
 
-// Referenced or copied sources:
+// Inspiration, reference or copied sources:
 // https://github.com/iuriguilherme/netscripts.d/blob/master/deepscan-nuke.script
 // https://github.com/Nolshine/bitburner-scripts/master/crawlkill.ns.js
 // https://github.com/Nolshine/bitburner-scripts/blob/master/spidercrack.ns.js
