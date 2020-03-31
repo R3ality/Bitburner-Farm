@@ -37,7 +37,7 @@ var ramLimit = null;
 if (args.length > 0) {
     ramLimit = args[0];
     ramLimit = getNearestSmallerPow2(ramLimit + 1); // Make sure its a power of 2
-    tprint("<font color=cyan> NOTIFY:</font> Ram limit set to " + ramLimit);
+    tprint("<font color=cyan> NOTIFY:</font> Ram limit set to " + ramLimit + " GB");
 }
 else {
     if (!prompt("Are your sure you want to continue without a RAM limit ?")) {
@@ -143,7 +143,7 @@ while (true) {
         if (weakest.ram < purchaseRam) {
             // Remove the weakest server
             deleteServer(weakest.hostname);
-            tprint("<font color=cyan> NOTIFY:</font> At server limit! Deleted weakest server " + weakest.hostname + " with " + nFormat(weakest.ram, '0,0') + " RAM");
+            tprint("<font color=cyan> NOTIFY:</font> At server limit! Deleted weakest server " + weakest.hostname + " with " + nFormat(weakest.ram, '0,0') + " GB RAM");
         } else {
             tprint("<font color=cyan> NOTIFY:</font> At server limit! Unable to upgrade any existing servers. Waiting for next iteration..");
             sleep(15000);
