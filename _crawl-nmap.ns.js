@@ -24,6 +24,8 @@ export async function main(ns) {
         ",getServerMinSecurityLevel" +
         ",getServerGrowth" +
         ",getHackTime" +
+        ",getWeakenTime" +
+        ",getGrowTime" +
         ",score" +
         "\r\n");
 
@@ -60,6 +62,8 @@ export async function main(ns) {
             "," + securityMin +
             "," + rateGrowth +
             "," + Math.round(timeHack) +
+            "," + Math.round(ns.getWeakenTime(target)) +
+            "," + Math.round(ns.getGrowTime(target)) +
             "," + score +
             "\r\n");
 
@@ -78,15 +82,7 @@ export async function main(ns) {
         let server = {
             hostname: stats[0],
             isRooted: parseBoolean(stats[1]),
-            ramTotal: parseInt(stats[2]),
-            portsReq: parseInt(stats[3]),
             levelReq: parseInt(stats[4]),
-            moneyNow: parseInt(stats[5]),
-            moneyMax: parseInt(stats[6]),
-            secNow: parseInt(stats[7]),
-            secMin: parseInt(stats[8]),
-            rateGrow: parseInt(stats[9]),
-            timeHack: parseInt(stats[10]),
             score: parseInt(stats[11])
         };
 
