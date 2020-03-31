@@ -51,5 +51,5 @@ export async function main(ns) {
         }
     }
 
-    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling " + (visited.length - 1) + " targets. Enslaved " + enslaved);
+    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling " + visited.length + " targets. Enslaved " + enslaved);
 }

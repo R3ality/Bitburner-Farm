@@ -9,15 +9,16 @@ export async function main(ns) {
     let storage = "foodnstuff"; // Server name to use for storage
     let stored = []; // Array of stored filenames
 
-    // Arrays for visited and planned targets
-    let visited = ["home", storage]; // ADD ANY SERVERS HERE WHICH SHOULD BE SKIPPED
+    // Arrays for ignored, visited and planned targets
+    let ignored = ["home"]; // ADD ANY SERVERS HERE WHICH SHOULD BE SKIPPED
+    let visited = [];
     let planned = ns.scan("home");
 
     while (planned.length > 0) {
         let target = planned.pop();
 
-        // If it is already visited, ignore it and jump to next iteration
-        if (visited.includes(target)) {
+        // If it is ignored or already visited, skip it and jump to next iteration
+        if (ignored.includes(target) || visited.includes(target)) {
             ns.print("<font color=cyan>Ignoring target:</font> " + target);
             continue;
         }
@@ -51,5 +52,5 @@ export async function main(ns) {
         }
     }
 
-    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling " + (visited.length - 1) + " targets. Fetched files: " + stored.length);
+    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling " + visited.length + " targets. Fetched files: " + stored.length);
 }

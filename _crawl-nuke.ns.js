@@ -78,5 +78,5 @@ export async function main(ns) {
         }
     }
 
-    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling targets: " + (visited.length - 1) + ". Nuked " + nuked);
+    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling targets: " + visited.length + ". Nuked " + nuked);
 }
