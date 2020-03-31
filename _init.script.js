@@ -15,7 +15,7 @@ var fileNames = [
     "_grow.script",
     "_hack.script",
     "_manage-hacknet.ns",
-    "_manage-nodes.ns",
+    "_manage-nodes.script",
     "_monitor.script",
     "_prep.script",
     "program-manager.ns",
