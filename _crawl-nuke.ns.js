@@ -22,6 +22,7 @@ export async function main(ns) {
     // No need to add our purchased nodes since we are checking for hasRootAccess() below
     let visited = [];
     let planned = ns.scan("home");
+    let nuked = 0;
 
     while (planned.length > 0) {
         let target = planned.pop();

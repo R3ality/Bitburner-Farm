@@ -38,8 +38,7 @@ if (args.length > 0) {
     ramLimit = args[0];
     ramLimit = getNearestSmallerPow2(ramLimit + 1); // Make sure its a power of 2
     tprint("<font color=cyan> NOTIFY:</font> Ram limit set to " + ramLimit + " GB");
-}
-else {
+} else {
     if (!prompt("Are your sure you want to continue without a RAM limit ?")) {
         exit();
     }
@@ -79,13 +78,13 @@ function getWeakestServer(servers) {
 function getFreeServerIndex(servers) {
     var indices = [];
     for (var i = 0; i < servers.length; i++) {
-        var index = parseInt(servers[i].split("-")[1]);
-        indices.push(index);
+        var index = servers[i].split("-")[1];
+        if (index) indices.push(parseInt(index));
     }
 
-    for (var i = 0; i < servers.length; i++) {
-        if (indices.includes(i)) continue;
-        else return i;
+    for (var j = 0; j < servers.length; j++) {
+        if (indices.includes(j)) continue;
+        else return j;
     }
 }
 
@@ -96,8 +95,8 @@ while (true) {
     var servers = getPurchasedServers();
     var purchaseName = name + "-" + getFreeServerIndex(servers);
 
-    // If planend server is weaker than home, do not purchase
-    if (purchaseRam < getServerRam("home")[0]) {
+    // If specific ramLimit was not set and planned server is weaker than home, do not purchase
+    if (!ramLimit && purchaseRam < getServerRam("home")[0]) {
         tprint("<font color=cyan> NOTIFY:</font> Skipping purchase of a server weaker than home. Waiting for next iteration..");
         sleep(15000);
         continue;
@@ -115,7 +114,7 @@ while (true) {
 
         // Purchase and see if it was successful
         if (purchaseServer(purchaseName, purchaseRam) != purchaseName) {
-            tprint("<font color=green>FAILURE:</font> Purchase failed!");
+            tprint("<font color=green>FAILURE:</font> Purchase failed: " + purchaseName);
             sleep(5000);
             continue;
         }
@@ -142,6 +141,8 @@ while (true) {
         var weakest = getWeakestServer(servers);
         if (weakest.ram < purchaseRam) {
             // Remove the weakest server
+            killall(weakest.hostname);
+            sleep(1000);
             deleteServer(weakest.hostname);
             tprint("<font color=cyan> NOTIFY:</font> At server limit! Deleted weakest server " + weakest.hostname + " with " + nFormat(weakest.ram, '0,0') + " GB RAM");
         } else {

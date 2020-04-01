@@ -13,6 +13,7 @@ export async function main(ns) {
     ignored = ignored.concat(ns.getPurchasedServers()); // Ignore our purchased nodes as well
     let visited = [];
     let planned = ns.scan("home");
+    let enslaved = 0;
 
     while (planned.length > 0) {
         let target = planned.pop();
