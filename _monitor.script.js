@@ -1,7 +1,7 @@
 // Monitor the security and money of the target
 
 // If available, get target from file
-var target = read("_target.txt");
+var target = read("__target-money.txt");
 if (!target) {
     // Otherwise get from argument
     if (args.length > 0) target = args[0];

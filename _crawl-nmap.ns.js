@@ -11,10 +11,13 @@ export async function main(ns) {
     let visited = [];
     let planned = ns.scan("home");
 
-    ns.clear("_nmap.txt"); // Start with an empty file
+    let hackLevel = ns.getHackingLevel();
+    let filename = '__nmap.txt';
+
+    ns.clear(filename); // Start with an empty file
 
     // Add header row, this is optional
-    ns.write("_nmap.txt", "hostname" +
+    ns.write(filename, "hostname" +
         ",hasRootAccess" +
         ",getServerRam" +
         ",getServerNumPortsRequired" +
@@ -52,7 +55,7 @@ export async function main(ns) {
         let score = Math.round((100 - securityMin) * moneyMax * rateGrowth / timeHack);
 
         // Write details to file
-        ns.write("_nmap.txt", target +
+        ns.write(filename, target +
             "," + ns.hasRootAccess(target) +
             "," + ns.getServerRam(target)[0] +
             "," + ns.getServerNumPortsRequired(target) +
@@ -72,36 +75,49 @@ export async function main(ns) {
     }
 
     // Determine best server based on the score
-    let bestTargetScore = 0;
-    let bestTargetName = null;
+    let target = {
+        money: { hostname: null, benchmark: null, filename: '__target-money.txt' },
+        exp: { hostname: null, benchmark: null, filename: '__target-exp.txt' }
+    };
 
-    let rows = ns.read("_nmap.txt").split("\r\n");
-    for (let i = 0; i < rows.length; ++i) {
-        let stats = rows[i].split(',');
-        if (stats.length < 7) break; // Ignore last blank row
+    let rows = ns.read(filename).split("\r\n");
+    for (let i = 1; i < rows.length; ++i) { // skip header row (index 0)
+        let row = rows[i].trim();
+        if (!row) break; // Ignore blank row at the end
+        let stats = row.split(',');
 
         let server = {
             hostname: stats[0],
             isRooted: parseBoolean(stats[1]),
             levelReq: parseInt(stats[4]),
-            score: parseInt(stats[11])
+            weakenTime: parseInt(stats[11]),
+            score: parseInt(stats[13])
         };
 
-        if (server.isRooted && server.score > bestTargetScore) {
-            if (server.levelReq <= ns.getHackingLevel()) { // Make sure we have high enough level
-                bestTargetScore = server.score;
-                bestTargetName = server.hostname;
+        if (server.isRooted) {
+            // If current server has higher score than any previous, select as target
+            if (server.score > target.money.benchmark && server.levelReq <= hackLevel) {
+                target.money.benchmark = server.score;
+                target.money.hostname = server.hostname;
+            }
+            // If no exp target so far, or if current server has lower weaken time
+            if (!target.exp.benchmark || server.weakenTime < target.exp.benchmark) {
+                target.exp.benchmark = server.weakenTime;
+                target.exp.hostname = server.hostname;
             }
         }
     }
 
-    // Write best target to file (if found)
-    ns.rm("_target.txt");
-    if (bestTargetName) {
-        ns.write("_target.txt", bestTargetName);
-    }
+    // Remove old files
+    ns.rm(target.money.filename);
+    ns.rm(target.exp.filename);
 
-    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling " + visited.length + " targets. See output file for details. Best rooted target: " + (bestTargetName ? bestTargetName : "n/a"));
+    // Write new files (if targets were found)
+    if (target.money.hostname) ns.write(target.money.filename, target.money.hostname);
+    if (target.exp.hostname) ns.write(target.exp.filename, target.exp.hostname);
+
+    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling " + visited.length + " targets. See output file for details");
+    ns.tprint("<font color=cyan> NOTIFY:</font> Optimal money target: " + (target.money.hostname ? target.money.hostname : "n/a") + ". Optimal exp target: " + (target.exp.hostname ? target.exp.hostname : "n/a"));
 }
 
 function parseBoolean(str) {

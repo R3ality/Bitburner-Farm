@@ -10,10 +10,10 @@ disableLog("exec");
 
 var host = getHostname();
 
-// If available, get target from file
-var target = read("_target.txt");
+// Get target from file (if available)
+var target = read("__target-money.txt").trim();
 if (!target) {
-    // Otherwise if available, get target from args
+    // Otherwise, get target from args (if available)
     if (args.length > 0) target = args[0];
     else {
         // Otherwise default to self

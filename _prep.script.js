@@ -13,7 +13,8 @@ var fileNames = [
     "_hack.script",
     "_weak.script",
     "_farm.script",
-    "_target.txt"
+    "__target-money.txt",
+    "__target-exp.txt"
 ];
 
 fileNames.forEach(function(fileName) {
@@ -22,7 +23,7 @@ fileNames.forEach(function(fileName) {
         print("Finished uploading: " + fileName);
     }
     else {
-        if (fileName != '_target.txt') { // Ignore if failure is target file as it is allowed to be unset.
+        if (!fileName.startsWith('__target')) { // Ignore if failure is a target file as these are allowed to be missing
             tprint("<font color=red>ERROR:</font> Failed uploading " + fileName +" to host " + host + ". Exiting..");
             exit();
         }
