@@ -101,9 +101,6 @@ export async function main(ns) {
         ns.write("_target.txt", bestTargetName);
     }
 
-    ns.tprint(ignored);
-    ns.tprint(visited);
-    ns.tprint(planned);
     ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling " + visited.length + " targets. See output file for details. Best rooted target: " + (bestTargetName ? bestTargetName : "n/a"));
 }
 

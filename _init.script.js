@@ -2,7 +2,10 @@
 
 // Accept an argument to only clean existing scripts without downloading new ones
 var cleanOnly = false;
-if (args.length > 0) cleanOnly = true;
+if (args.length > 0) {
+    cleanOnly = true;
+    tprint("<font color=cyan> NOTIFY:</font> Cleaning environment only, not fetching new scripts..");
+}
 
 var fileNames = [
     "_crawl-enslave.ns",

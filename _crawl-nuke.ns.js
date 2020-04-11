@@ -19,7 +19,7 @@ export async function main(ns) {
 
     // Arrays for ignored, visited and planned targets
     let ignored = ["home"]; // ADD ANY SERVERS HERE WHICH SHOULD BE SKIPPED
-    // No need to add our purchased nodes since we are checking for hasRootAccess() below
+    ignored = ignored.concat(ns.getPurchasedServers()); // Ignore our purchased nodes as well
     let visited = [];
     let planned = ns.scan("home");
     let nuked = 0;
