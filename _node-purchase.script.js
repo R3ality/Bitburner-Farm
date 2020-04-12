@@ -129,7 +129,7 @@ while (true) {
         }
 
         // Verify results
-        if (ns.isRunning("_farm-money.script", purchaseName) || ns.isRunning("_farm-exp.script", purchaseName)) {
+        if (isRunning("_farm-money.script", purchaseName) || isRunning("_farm-exp.script", purchaseName)) {
             tprint("<font color=green>SUCCESS:</font> Node enslaved: " + purchaseName);
         } else {
             tprint("<font color=red>FAILURE:</font> Enslaving failed: " + purchaseName);
