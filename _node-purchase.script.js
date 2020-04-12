@@ -82,10 +82,11 @@ function getFreeServerIndex(servers) {
         if (index) indices.push(parseInt(index));
     }
 
-    for (var j = 0; j < servers.length; j++) {
-        if (indices.includes(j)) continue;
-        else return j;
+    var index = 1;
+    while (indices.includes(index)) {
+        index++;
     }
+    return index;
 }
 
 while (true) {
