@@ -22,10 +22,9 @@ fileNames.forEach(function(fileName) {
     rm(fileName, host); // scp() should overwrite but this did not appear to be working
     if (scp(fileName, "home", host)) {
         print("Finished uploading: " + fileName);
-    }
-    else {
+    } else {
         if (!fileName.startsWith('__target')) { // Ignore if failure is a target file as these are allowed to be missing
-            tprint("<font color=red>ERROR:</font> Failed uploading " + fileName +" to host " + host + ". Exiting..");
+            tprint("<font color=red>ERROR:</font> Failed uploading " + fileName + " to host " + host + ". Exiting..");
             exit();
         }
     }

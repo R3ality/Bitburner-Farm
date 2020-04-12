@@ -7,8 +7,8 @@ if (args.length != 1) {
 }
 var target = args[0];
 
-var execScript = "_farm-exp.script" // Default to exp farming script
-if (args.length > 1) execScript = args[1];  // Or accept second argument as target script name
+var execScript = "_farm-exp.script"; // Default to exp farming script
+if (args.length > 1) execScript = args[1]; // Or accept second argument as target script name
 
 function runLocalAwait(script, arg) { // Run local script and await for it to finish
     if (exec(script, "home", 1, arg) > 0) {
@@ -26,7 +26,6 @@ if (hasRootAccess(target)) {
     runLocalAwait("_prep.script", target);
     killall(target);
     exec(execScript, target, 1);
-}
-else {
+} else {
     tprint("<font color=red>FAILURE:</font> Target is not rooted: " + target);
 }

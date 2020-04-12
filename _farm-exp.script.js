@@ -8,7 +8,7 @@ var scriptPath = {
     weak: "_weak.script",
     grow: "_grow.script",
     hack: "_hack.script"
-}
+};
 
 // Get target from file (if available)
 var target = read("__target-exp.txt").trim();
@@ -34,7 +34,7 @@ var ramNeed = {
     weak: getScriptRam(scriptPath.weak),
     grow: getScriptRam(scriptPath.grow),
     hack: getScriptRam(scriptPath.hack)
-}
+};
 
 // Error checking for ramNeed 0 which probably means the script file is missing
 if (ramNeed.weak == 0 || ramNeed.grow == 0 || ramNeed.hack == 0) {
@@ -47,7 +47,7 @@ var threadCount = {
     weak: Math.floor(ramFree / ramNeed.weak),
     grow: Math.floor(ramFree / ramNeed.grow),
     hack: Math.floor(ramFree / ramNeed.hack)
-}
+};
 
 // Error checking for threadCount 0 which probably means we have no ram
 if (threadCount.weak == 0 || threadCount.grow == 0 || threadCount.hack == 0) {
