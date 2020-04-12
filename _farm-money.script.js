@@ -46,7 +46,10 @@ if (target != host) securityThreshold = (securityMin * 2); // Assuming many host
 
 var ram = getServerRam(host);
 var ramFree = ram[0] - ram[1];
-if (target == "home") ramFree = ramFree * 0.98 // If we're on home, leave 2% free ram for other scripts
+if (host == "home") {
+    ramFree = Math.floor(ramFree * 0.98); // If we're on home, leave 2% of ram for other scripts
+    tprint("<font color=cyan> NOTIFY:</font> [" + host + "]: Reduced maximum ram utilization from " + Math.floor(ram[0] - ram[1]) + " GB to " + ramFree + " GB");
+}
 
 var ramNeedWeak = getScriptRam(pathWeak);
 var ramNeedGrow = getScriptRam(pathGrow);
