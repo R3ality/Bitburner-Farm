@@ -27,13 +27,12 @@ var remember = null;
 while (true) {
     var moneyNow = getServerMoneyAvailable(target);
     var moneyMax = getServerMaxMoney(target);
-    var moneyDif = moneyMax - moneyNow;
 
     var securityNow = getServerSecurityLevel(target);
     var securityMin = getServerMinSecurityLevel(target);
     var securityDif = securityNow - securityMin;
 
-    var txt = "<font color=magenta>MONITOR:</font> [" + target + "]: Money: " + nFormat(moneyNow, '0,0.00') + " (" + nFormat(moneyDif, '0,0.00') + " under max) / Security: " + nFormat(securityNow, '0,0.00') + " (" + nFormat(securityDif, '0,0.00') + " over min)";
+    var txt = "<font color=magenta>MONITOR:</font> [" + target + "]: Money: " + nFormat(moneyNow, '0,0.00') + " (" + ((moneyNow / moneyMax) * 100).toFixed(2) + "% of max " + nFormat(moneyMax, '0,0.00') + ") / Security: " + nFormat(securityNow, '0,0.00') + " (" + nFormat(securityDif, '0,0.00') + " over min)";
     if (txt !== remember) { // Only output if there has been a change
         remember = txt;
         tprint("[" + getTimestamp().slice(-8) + "] " + txt);
