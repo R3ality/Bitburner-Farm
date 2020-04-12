@@ -46,6 +46,7 @@ if (target != host) securityThreshold = (securityMin * 2); // Assuming many host
 
 var ram = getServerRam(host);
 var ramFree = ram[0] - ram[1];
+if (target == "home") ramFree = ramFree * 0.98 // If we're on home, leave 2% free ram for other scripts
 
 var ramNeedWeak = getScriptRam(pathWeak);
 var ramNeedGrow = getScriptRam(pathGrow);

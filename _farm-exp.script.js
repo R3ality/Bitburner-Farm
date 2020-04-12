@@ -30,6 +30,8 @@ if (target == "home") {
 // RAM variables
 var ram = getServerRam(host);
 var ramFree = ram[0] - ram[1];
+if (target == "home") ramFree = ramFree * 0.98 // If we're on home, leave 2% free ram for other scripts
+
 var ramNeed = {
     weak: getScriptRam(scriptPath.weak),
     grow: getScriptRam(scriptPath.grow),
