@@ -32,7 +32,7 @@ export async function main(ns) {
         // If it is rooted, and has ram...
         if (ns.hasRootAccess(target) && ns.getServerRam(target)[0] != 0) {
             // ...and not yet enslaved, attempt to enslave it
-            if (!ns.isRunning("_farm.script", target)) {
+            if (!ns.isRunning("_farm-money.script", target) && !ns.isRunning("_farm-exp.script", target)) {
 
                 ns.exec("_enslave.script", "home", 1, target);
 
@@ -42,7 +42,7 @@ export async function main(ns) {
                 }
 
                 // Verify results
-                if (ns.isRunning("_farm.script", target)) {
+                if (ns.isRunning("_farm-money.script", target) || ns.isRunning("_farm-exp.script", target)) {
                     enslaved++;
                     ns.tprint("<font color=green>SUCCESS:</font> Target enslaved: " + target);
                 } else {

@@ -12,7 +12,8 @@ var fileNames = [
     "_grow.script",
     "_hack.script",
     "_weak.script",
-    "_farm.script",
+    "_farm-money.script",
+    "_farm-exp.script",
     "__target-money.txt",
     "__target-exp.txt"
 ];
