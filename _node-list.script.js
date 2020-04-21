@@ -8,10 +8,12 @@ for (var i = 0; i < servers.length; i++) {
     tprint("Node " +
         String("           " + server).slice(-7) +
         " RAM: " +
-        String("           " + nFormat(Math.round(ram[1]), '0,0')).slice(-9) +
-        " GB (used) " +
-        String("           " + nFormat(ram[0], '0,0')).slice(-9) +
-        " GB (free)");
+        String("           " + nFormat(Math.round(ram[0]), '0,0')).slice(-9) +
+        " GB (total) " +
+        String("           " + nFormat(Math.round(ram[0] - ram[1]), '0,0')).slice(-9) +
+        " GB (free)" +
+        String("           " + ((ram[1] / ram[0]) * 100).toFixed(2)).slice(-6) +
+        "% (used)");
 }
 
 tprint("<font color=cyan> NOTIFY:</font> Finished listing " + servers.length + " nodes");
