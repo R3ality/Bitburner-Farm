@@ -37,7 +37,7 @@ var ramLimit = null;
 if (args.length > 0) {
     ramLimit = args[0];
     ramLimit = getNearestSmallerPow2(ramLimit + 1); // Make sure its a power of 2
-    tprint("<font color=cyan> NOTIFY:</font> Ram limit set to " + ramLimit + " GB");
+    tprint("INFO: Ram limit set to " + ramLimit + " GB");
 } else {
     if (!prompt("Are your sure you want to continue without a RAM limit ?")) {
         exit();
@@ -98,7 +98,7 @@ while (true) {
 
     // If specific ramLimit was not set and planned server is weaker than home, do not purchase
     if (!ramLimit && purchaseRam < getServerRam("home")[0]) {
-        tprint("<font color=cyan> NOTIFY:</font> Skipping purchase of a server weaker than home. Waiting for next iteration..");
+        tprint("INFO: Skipping purchase of a server weaker than home. Waiting for next iteration..");
         sleep(15000);
         continue;
     }
@@ -115,11 +115,11 @@ while (true) {
 
         // Purchase and see if it was successful
         if (purchaseServer(purchaseName, purchaseRam) != purchaseName) {
-            tprint("<font color=green>FAILURE:</font> Purchase failed: " + purchaseName);
+            tprint("ERROR: Purchase failed: " + purchaseName);
             sleep(5000);
             continue;
         }
-        tprint("<font color=green>SUCCESS:</font> Purchased " + txt);
+        tprint("SUCCESS: Purchased " + txt);
 
         // Enslave it as well
         exec("_enslave.script", "home", 1, purchaseName);
@@ -131,9 +131,9 @@ while (true) {
 
         // Verify results
         if (isRunning("_farm-money.script", purchaseName) || isRunning("_farm-exp.script", purchaseName)) {
-            tprint("<font color=green>SUCCESS:</font> Node enslaved: " + purchaseName);
+            tprint("SUCCESS: Node enslaved: " + purchaseName);
         } else {
-            tprint("<font color=red>FAILURE:</font> Enslaving failed: " + purchaseName);
+            tprint("ERROR: Enslaving failed: " + purchaseName);
         }
     }
 
@@ -145,9 +145,9 @@ while (true) {
             killall(weakest.hostname);
             sleep(1000);
             deleteServer(weakest.hostname);
-            tprint("<font color=cyan> NOTIFY:</font> At server limit! Deleted weakest server " + weakest.hostname + " with " + nFormat(weakest.ram, '0,0') + " GB RAM");
+            tprint("INFO: At server limit! Deleted weakest server " + weakest.hostname + " with " + nFormat(weakest.ram, '0,0') + " GB RAM");
         } else {
-            tprint("<font color=cyan> NOTIFY:</font> At server limit! Unable to upgrade any existing servers. Waiting for next iteration..");
+            tprint("INFO: At server limit! Unable to upgrade any existing servers. Waiting for next iteration..");
             sleep(15000);
         }
     }

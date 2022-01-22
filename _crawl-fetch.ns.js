@@ -19,7 +19,7 @@ export async function main(ns) {
 
         // If it is ignored or already visited, skip it and jump to next iteration
         if (ignored.includes(target) || visited.includes(target)) {
-            ns.print("<font color=cyan>Ignoring target:</font> " + target);
+            ns.print("INFO: Ignoring target: " + target);
             continue;
         }
 
@@ -40,17 +40,17 @@ export async function main(ns) {
                 // scp() does not work with this file type. It only works for .script, .lit, and .txt files
                 // Apparently scp is rather limited. So fetch the ones which we can..
                 if (files[i].endsWith(".script") || files[i].endsWith(".lit") || files[i].endsWith(".txt")) {
-                    //ns.tprint("<font color=green>SUCCESS:</font> Fetching file " + files[i] + " from " + target);
+                    //ns.tprint("SUCCESS: Fetching file " + files[i] + " from " + target);
                     ns.scp(files[i], target, storage);
                     stored.push(files[i]);
                     continue;
                 }
 
                 // .. and just notify about the rest
-                ns.tprint("<font color=red>FAILURE:</font> Unable to fetch file " + files[i] + " from " + target);
+                ns.tprint("WARN: Unable to fetch file " + files[i] + " from " + target);
             }
         }
     }
 
-    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling " + visited.length + " targets. Fetched files: " + stored.length);
+    ns.tprint("INFO: Finished crawling " + visited.length + " targets. Fetched files: " + stored.length);
 }

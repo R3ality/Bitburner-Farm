@@ -15,7 +15,7 @@ export async function main(ns) {
             while (ns.getServerMoneyAvailable("home") < hn.getPurchaseNodeCost()) {
                 await ns.sleep(5000);
             }
-            ns.print("<font color=cyan>Purchase FIRST node!</font>");
+            ns.print("INFO: Purchase FIRST node!");
             hn.purchaseNode();
             continue; // Iterate loop just in case purchase failed
         }
@@ -55,11 +55,11 @@ export async function main(ns) {
 
         if (cheapestNode === null || cheapestOper === null) {
             // No operation was found to be cheaper, buy new node instead
-            ns.print("<font color=cyan>Purchase hacknet-node-" + hn.numNodes() + "</font>");
+            ns.print("INFO: Purchase hacknet-node-" + hn.numNodes());
             hn.purchaseNode();
         } else {
             // Buy the cheapest upgrade
-            ns.print("<font color=cyan>Upgrade " + cheapestOper.toUpperCase() + " on hacknet-node-" + cheapestNode + "</font>");
+            ns.print("INFO: Upgrade " + cheapestOper.toUpperCase() + " on hacknet-node-" + cheapestNode);
             if (cheapestOper == "core") hn.upgradeCore(cheapestNode);
             else if (cheapestOper == "ram") hn.upgradeRam(cheapestNode);
             else if (cheapestOper == "level") hn.upgradeLevel(cheapestNode);

@@ -3,13 +3,13 @@
 var forceKill = false; // Default to NOT kill running subject script
 if (args.length > 0) {
     forceKill = parseBoolean(args[0]); // Or accept second argument and forcefully kill any script
-    tprint("<font color=cyan> NOTIFY:</font> Force killall set to: " + forceKill);
+    tprint("INFO: Force killall set to: " + forceKill);
 }
 
 var execScript = "_farm-exp.script"; // Default to exp farming script
 if (args.length > 1) {
     execScript = args[1]; // Or accept second argument as target script name
-    tprint("<font color=cyan> NOTIFY:</font> Subject script set to: " + execScript);
+    tprint("INFO: Subject script set to: " + execScript);
 }
 
 var servers = getPurchasedServers();
@@ -46,9 +46,9 @@ while (servers.length > 0) {
 
     // Verify results
     if (isRunning(execScript, target)) {
-        tprint("<font color=green>SUCCESS:</font> Node managed: " + target);
+        tprint("SUCCESS: Node managed: " + target);
     } else {
-        tprint("<font color=red>FAILURE:</font> Management failed: " + target);
+        tprint("ERROR: Management failed: " + target);
     }
 
 }

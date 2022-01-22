@@ -23,9 +23,9 @@ if (!target) {
 
 // Avoid targeting some servers
 if (target == "home") {
-    tprint("<font color=red>FAILURE:</font> Avoiding targeting host: " + target + ". Exiting..");
+    tprint("ERROR: Avoiding targeting host: " + target + ". Exiting..");
     exit();
-} else tprint("<font color=cyan> NOTIFY:</font> [" + host + "]: Specific target set: " + target);
+} else tprint("INFO: [" + host + "]: Specific target set: " + target);
 
 var pathWeak = "_weak.script";
 var pathGrow = "_grow.script";
@@ -36,7 +36,7 @@ var moneyThreshold = (moneyMax * 0.9); // Do not drain money lower than this thr
 
 // If the server cannot have any money we have nothing to do here
 if (moneyMax < 1) {
-    tprint("<font color=red>FAILURE:</font> [" + host + "]: getServerMaxMoney(" + target + ") returned 0. Exiting..");
+    tprint("ERROR: [" + host + "]: getServerMaxMoney(" + target + ") returned 0. Exiting..");
     exit();
 }
 
@@ -48,7 +48,7 @@ var ram = getServerRam(host);
 var ramFree = ram[0] - ram[1];
 if (host == "home") {
     ramFree = Math.floor(ramFree * 0.98); // If we're on home, leave 2% of ram for other scripts
-    tprint("<font color=cyan> NOTIFY:</font> [" + host + "]: Reduced maximum ram utilization from " + Math.floor(ram[0] - ram[1]) + " GB to " + ramFree + " GB");
+    tprint("INFO: [" + host + "]: Reduced maximum ram utilization from " + Math.floor(ram[0] - ram[1]) + " GB to " + ramFree + " GB");
 }
 
 var ramNeedWeak = getScriptRam(pathWeak);
@@ -56,7 +56,7 @@ var ramNeedGrow = getScriptRam(pathGrow);
 var ramNeedHack = getScriptRam(pathHack);
 
 if (ramNeedWeak == 0 || ramNeedGrow == 0 || ramNeedHack == 0) {
-    tprint("<font color=red>FAILURE:</font> [" + host + "]: getScriptRam() 0. Exiting..");
+    tprint("ERROR: [" + host + "]: getScriptRam() 0. Exiting..");
     exit();
 }
 
@@ -65,7 +65,7 @@ var threadCountGrow = Math.floor(ramFree / ramNeedGrow);
 var threadCountHack = Math.floor(ramFree / ramNeedHack);
 
 if (threadCountWeak == 0 || threadCountGrow == 0 || threadCountHack == 0) {
-    tprint("<font color=red>FAILURE:</font> [" + host + "]: Thread count for a script returned 0. Exiting..");
+    tprint("ERROR: [" + host + "]: Thread count for a script returned 0. Exiting..");
     exit();
 }
 
@@ -83,10 +83,10 @@ while (true) {
 
     // If security over threshold
     if (securityNow > securityThreshold) {
-        print("<font color=cyan> NOTIFY:</font> Security exceeds threshold: " + nFormat(securityNow, '0,0.00') + " > " + nFormat(securityThreshold, '0,0.00') + ". Weakening until " + nFormat(securityMin, '0,0.00') + "</font>");
+        print("INFO: Security exceeds threshold: " + nFormat(securityNow, '0,0.00') + " > " + nFormat(securityThreshold, '0,0.00') + ". Weakening until " + nFormat(securityMin, '0,0.00'));
         while (getServerSecurityLevel(target) > securityMin) { // Weaken it to minimum level
             var timeWeak = getWeakenTime(target);
-            print("<font color=white> INVOKE:</font> " + pathWeak + " [" + target + "] with " + threadCountWeak + " threads. Await " + nFormat(timeWeak, '00:00:00'));
+            print("SUCCESS: " + pathWeak + " [" + target + "] with " + threadCountWeak + " threads. Await " + nFormat(timeWeak, '00:00:00'));
             exec(pathWeak, host, threadCountWeak, target);
             sleep(Math.ceil(timeWeak * 1000) + getExtraSleepTime()); // Add extra sleep time for some variance
         }
@@ -94,10 +94,10 @@ while (true) {
 
     // Else if money is not maxed, grow it until max
     else if (moneyNow < moneyMax) {
-        print("<font color=cyan> NOTIFY:</font> Money not maxed. Growing while " + nFormat(moneyNow, '$0.000a') + " < " + nFormat(moneyMax, '$0.000a'));
+        print("INFO: Money not maxed. Growing while " + nFormat(moneyNow, '$0.000a') + " < " + nFormat(moneyMax, '$0.000a'));
         while (getServerMoneyAvailable(target) < moneyMax) {
             var timeGrow = getGrowTime(target);
-            print("<font color=white> INVOKE:</font> " + pathGrow + " [" + target + "] with " + threadCountGrow + " threads. Await " + nFormat(timeGrow, '00:00:00'));
+            print("SUCCESS: " + pathGrow + " [" + target + "] with " + threadCountGrow + " threads. Await " + nFormat(timeGrow, '00:00:00'));
             exec(pathGrow, host, threadCountGrow, target);
             sleep(Math.ceil(timeGrow * 1000) + getExtraSleepTime()); // Add extra sleep time for some variance
         }
@@ -105,10 +105,10 @@ while (true) {
 
     // Otherwise hack the target
     else {
-        print("<font color=cyan> NOTIFY:</font> Hacking money while over threshold: " + nFormat(moneyNow, '$0.000a') + " < " + nFormat(moneyThreshold, '$0.000a'));
+        print("INFO: Hacking money while over threshold: " + nFormat(moneyNow, '$0.000a') + " < " + nFormat(moneyThreshold, '$0.000a'));
         while (getServerMoneyAvailable(target) > moneyThreshold) { // Until money is under threshold
             var timeHack = getHackTime(target);
-            print("<font color=white> INVOKE:</font> " + pathHack + " [" + target + "] with " + threadCountHack + " threads. Await " + nFormat(timeHack, '00:00:00'));
+            print("SUCCESS: " + pathHack + " [" + target + "] with " + threadCountHack + " threads. Await " + nFormat(timeHack, '00:00:00'));
             exec(pathHack, host, threadCountHack, target);
             sleep(Math.ceil(timeHack * 1000) + getExtraSleepTime()); // Add extra sleep time for some variance
         }

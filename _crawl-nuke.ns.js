@@ -29,7 +29,7 @@ export async function main(ns) {
 
         // If it is ignored or already visited, skip it and jump to next iteration
         if (ignored.includes(target) || visited.includes(target)) {
-            ns.print("<font color=cyan>Ignoring target:</font> " + target);
+            ns.print("INFO: Ignoring target: " + target);
             continue;
         }
 
@@ -57,7 +57,7 @@ export async function main(ns) {
         if (reasons.length > 0) {
             let reasonsString = reasons.join(", ");
             if (reasonsString == 'Target already rooted') continue; // Optional. If this is the only reason, do not warn
-            ns.tprint("<font color=yellow>WARNING:</font> Skipping target: " + target + " (" + reasonsString + ")");
+            ns.tprint("WARN: Skipping target: " + target + " (" + reasonsString + ")");
             continue;
         }
 
@@ -73,11 +73,11 @@ export async function main(ns) {
         await ns.sleep(1000);
         if (ns.hasRootAccess(target)) {
             nuked++;
-            ns.tprint("<font color=green>SUCCESS:</font> Target rooted: " + target);
+            ns.tprint("SUCCESS: Target rooted: " + target);
         } else {
-            ns.tprint("<font color=red>FAILURE:</font> Rooting failed: " + target);
+            ns.tprint("ERROR: Rooting failed: " + target);
         }
     }
 
-    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling targets: " + visited.length + ". Nuked " + nuked);
+    ns.tprint("INFO: Finished crawling targets: " + visited.length + ". Nuked " + nuked);
 }

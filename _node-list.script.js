@@ -16,4 +16,4 @@ for (var i = 0; i < servers.length; i++) {
         "% (used)");
 }
 
-tprint("<font color=cyan> NOTIFY:</font> Finished listing " + servers.length + " nodes");
+tprint("INFO: Finished listing " + servers.length + " nodes");

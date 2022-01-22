@@ -38,7 +38,7 @@ export async function main(ns) {
 
         // If it is ignored or already visited, skip it and jump to next iteration
         if (ignored.includes(target) || visited.includes(target)) {
-            ns.print("<font color=cyan>Ignoring target:</font> " + target);
+            ns.print("INFO: Ignoring target: " + target);
             continue;
         }
 
@@ -116,8 +116,8 @@ export async function main(ns) {
     if (target.money.hostname) ns.write(target.money.filename, target.money.hostname);
     if (target.exp.hostname) ns.write(target.exp.filename, target.exp.hostname);
 
-    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling " + visited.length + " targets. See output file for details");
-    ns.tprint("<font color=cyan> NOTIFY:</font> Optimal money target: " + (target.money.hostname ? target.money.hostname : "n/a") + ". Optimal exp target: " + (target.exp.hostname ? target.exp.hostname : "n/a"));
+    ns.tprint("INFO: Finished crawling " + visited.length + " targets. See output file for details");
+    ns.tprint("INFO: Optimal money target: " + (target.money.hostname ? target.money.hostname : "n/a") + ". Optimal exp target: " + (target.exp.hostname ? target.exp.hostname : "n/a"));
 }
 
 function parseBoolean(str) {

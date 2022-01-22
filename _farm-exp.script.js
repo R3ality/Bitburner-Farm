@@ -23,16 +23,16 @@ if (!target) {
 
 // Avoid targeting some servers
 if (target == "home") {
-    tprint("<font color=red>FAILURE:</font> Avoiding targeting host: " + target + ". Exiting..");
+    tprint("ERROR: Avoiding targeting host: " + target + ". Exiting..");
     exit();
-} else tprint("<font color=cyan> NOTIFY:</font> [" + host + "]: Specific target set: " + target);
+} else tprint("INFO: [" + host + "]: Specific target set: " + target);
 
 // RAM variables
 var ram = getServerRam(host);
 var ramFree = ram[0] - ram[1];
 if (host == "home") {
     ramFree = Math.floor(ramFree * 0.98); // If we're on home, leave 2% of ram for other scripts
-    tprint("<font color=cyan> NOTIFY:</font> [" + host + "]: Reduced maximum ram utilization from " + Math.floor(ram[0] - ram[1]) + " GB to " + ramFree + " GB");
+    tprint("INFO: [" + host + "]: Reduced maximum ram utilization from " + Math.floor(ram[0] - ram[1]) + " GB to " + ramFree + " GB");
 }
 
 var ramNeed = {
@@ -43,7 +43,7 @@ var ramNeed = {
 
 // Error checking for ramNeed 0 which probably means the script file is missing
 if (ramNeed.weak == 0 || ramNeed.grow == 0 || ramNeed.hack == 0) {
-    tprint("<font color=red>FAILURE:</font> [" + host + "]: getScriptRam() 0. Exiting..");
+    tprint("ERROR: [" + host + "]: getScriptRam() 0. Exiting..");
     exit();
 }
 
@@ -56,7 +56,7 @@ var threadCount = {
 
 // Error checking for threadCount 0 which probably means we have no ram
 if (threadCount.weak == 0 || threadCount.grow == 0 || threadCount.hack == 0) {
-    tprint("<font color=red>FAILURE:</font> [" + host + "]: Thread count for a script returned 0. Exiting..");
+    tprint("ERROR: [" + host + "]: Thread count for a script returned 0. Exiting..");
     exit();
 }
 
@@ -64,7 +64,7 @@ while (true) {
     var sleepTime = { weak: getWeakenTime(target) };
 
     // Just bombard the target with weaken for exp gain
-    print("<font color=white> INVOKE:</font> " + scriptPath.weak + " [" + target + "] with " + threadCount.weak + " threads. Await " + nFormat(sleepTime.weak, '00:00:00'));
+    print("SUCCESS: " + scriptPath.weak + " [" + target + "] with " + threadCount.weak + " threads. Await " + nFormat(sleepTime.weak, '00:00:00'));
     exec(scriptPath.weak, host, threadCount.weak, target);
     sleep(Math.ceil(sleepTime.weak * 1000) + 1000); // Add extra sleep time to be safe
 }

@@ -2,7 +2,7 @@
 
 // Expect the host to be provided via argument
 if (args.length != 1) {
-    tprint("<font color=red>ERROR:</font> Missing required arguments. Exiting..");
+    tprint("ERROR: Missing required arguments. Exiting..");
     exit();
 }
 var host = args[0];
@@ -24,7 +24,7 @@ fileNames.forEach(function(fileName) {
         print("Finished uploading: " + fileName);
     } else {
         if (!fileName.startsWith('__target')) { // Ignore if failure is a target file as these are allowed to be missing
-            tprint("<font color=red>ERROR:</font> Failed uploading " + fileName + " to host " + host + ". Exiting..");
+            tprint("ERROR: Failed uploading " + fileName + " to host " + host + ". Exiting..");
             exit();
         }
     }

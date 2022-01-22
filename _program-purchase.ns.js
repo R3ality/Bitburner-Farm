@@ -24,13 +24,13 @@ export async function main(ns) {
             }
             var cost = programCosts[i];
             if (cost <= getPlayerMoney(ns)) {
-                ns.tprint("<font color=cyan> NOTIFY:</font> Purchasing program " + prog + " for " + ns.nFormat(cost, "$0.000a") + " money");
+                ns.tprint("INFO: Purchasing program " + prog + " for " + ns.nFormat(cost, "$0.000a") + " money");
                 ns.purchaseProgram(prog);
             }
         }
         if (!foundMissingProgram) {
             hasAllPrograms = true;
-            ns.tprint("<font color=green>SUCCESS:</font> All predefined programs already available. Exiting..");
+            ns.tprint("SUCCESS: All predefined programs already available. Exiting..");
         }
         await ns.sleep(5000);
     }

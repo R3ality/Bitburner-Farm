@@ -4,7 +4,7 @@
 var cleanOnly = false;
 if (args.length > 0) {
     cleanOnly = true;
-    tprint("<font color=cyan> NOTIFY:</font> Cleaning environment only, not fetching new scripts..");
+    tprint("INFO: Cleaning environment only, not fetching new scripts..");
 }
 
 var fileNames = [
@@ -35,4 +35,4 @@ for (var i = 0; i < fileNames.length; i++) {
     wget(url, file);
 }
 
-tprint("<font color=green>SUCCESS:</font> Environment initialization completed!");
+tprint("SUCCESS: Environment initialization completed!");

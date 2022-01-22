@@ -16,7 +16,7 @@ export async function main(ns) {
 
         // If it is ignored or already visited, skip it and jump to next iteration
         if (ignored.includes(target) || visited.includes(target)) {
-            ns.print("<font color=cyan>Ignoring target:</font> " + target);
+            ns.print("INFO: Ignoring target: " + target);
             continue;
         }
 
@@ -40,5 +40,5 @@ export async function main(ns) {
         }
     }
 
-    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling " + visited.length + " targets");
+    ns.tprint("INFO: Finished crawling " + visited.length + " targets");
 }

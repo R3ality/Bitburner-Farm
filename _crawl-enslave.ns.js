@@ -20,7 +20,7 @@ export async function main(ns) {
 
         // If it is ignored or already visited, skip it and jump to next iteration
         if (ignored.includes(target) || visited.includes(target)) {
-            ns.print("<font color=cyan>Ignoring target:</font> " + target);
+            ns.print("INFO: Ignoring target: " + target);
             continue;
         }
 
@@ -44,13 +44,13 @@ export async function main(ns) {
                 // Verify results
                 if (ns.isRunning("_farm-money.script", target) || ns.isRunning("_farm-exp.script", target)) {
                     enslaved++;
-                    ns.tprint("<font color=green>SUCCESS:</font> Target enslaved: " + target);
+                    ns.tprint("SUCCESS: Target enslaved: " + target);
                 } else {
-                    ns.tprint("<font color=red>FAILURE:</font> Enslaving failed: " + target);
+                    ns.tprint("ERROR: Enslaving failed: " + target);
                 }
             }
         }
     }
 
-    ns.tprint("<font color=cyan> NOTIFY:</font> Finished crawling " + visited.length + " targets. Enslaved " + enslaved);
+    ns.tprint("INFO: Finished crawling " + visited.length + " targets. Enslaved " + enslaved);
 }

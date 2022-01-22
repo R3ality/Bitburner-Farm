@@ -6,7 +6,7 @@ if (!target) {
     // Otherwise get from argument
     if (args.length > 0) target = args[0];
     else {
-        tprint("<font color=red>ERROR:</font> No target specified. Exiting..");
+        tprint("ERROR: No target specified. Exiting..");
         exit();
     }
 }
@@ -32,7 +32,7 @@ while (true) {
     var securityMin = getServerMinSecurityLevel(target);
     var securityDif = securityNow - securityMin;
 
-    var txt = "<font color=magenta>MONITOR:</font> [" + target + "]: Money: " + nFormat(moneyNow, '0,0.00') + " (" + ((moneyNow / moneyMax) * 100).toFixed(2) + "% of max " + nFormat(moneyMax, '0,0.00') + ") / Security: " + nFormat(securityNow, '0,0.00') + " (" + nFormat(securityDif, '0,0.00') + " over min)";
+    var txt = "INFO: [" + target + "]: Money: " + nFormat(moneyNow, '0,0.00') + " (" + ((moneyNow / moneyMax) * 100).toFixed(2) + "% of max " + nFormat(moneyMax, '0,0.00') + ") / Security: " + nFormat(securityNow, '0,0.00') + " (" + nFormat(securityDif, '0,0.00') + " over min)";
     if (txt !== remember) { // Only output if there has been a change
         remember = txt;
         tprint("[" + getTimestamp().slice(-8) + "] " + txt);

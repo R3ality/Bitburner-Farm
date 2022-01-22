@@ -2,7 +2,7 @@
 
 // Expect arguments
 if (args.length != 1) {
-    tprint("<font color=red>ERROR:</font> Unexpected number of arguments provided. Exiting..");
+    tprint("ERROR: Unexpected number of arguments provided. Exiting..");
     exit();
 }
 var target = args[0];
@@ -16,7 +16,7 @@ function runLocalAwait(script, arg) { // Run local script and await for it to fi
             sleep(1000);
         }
     } else {
-        tprint("<font color=red>ERROR:</font> runLocalAwait(" + script + ", " + arg + ") failed!. Exiting..");
+        tprint("ERROR: runLocalAwait(" + script + ", " + arg + ") failed!. Exiting..");
         exit();
     }
 }
@@ -27,5 +27,5 @@ if (hasRootAccess(target)) {
     killall(target);
     exec(execScript, target, 1);
 } else {
-    tprint("<font color=red>FAILURE:</font> Target is not rooted: " + target);
+    tprint("ERROR: Target is not rooted: " + target);
 }
