@@ -8,31 +8,32 @@ if (args.length > 0) {
 }
 
 var fileNames = [
-    "_crawl-enslave.ns",
-    "_crawl-fetch.ns",
-    "_crawl-kill.ns",
-    "_crawl-nmap.ns",
-    "_crawl-nuke.ns",
+    "_crawl-enslave.js",
+    "_crawl-fetch.js",
+    "_crawl-kill.js", 
+    "_crawl-nmap.js",
+    "_crawl-nuke.js",
     "_enslave.script",
-    "_farm-money.script",
     "_farm-exp.script",
+    "_farm-money.script",
     "_grow.script",
     "_hack.script",
-    "_hacknet-manage.ns",
+    "_hacknet-manage.js",
     "_monitor.script",
     "_node-list.script",
+    "_node-manage.script",
     "_node-purchase.script",
     "_prep.script",
-    "_program-purchase.ns",
+    "_program-purchase.js",
     "_weak.script"
 ];
 
 for (var i = 0; i < fileNames.length; i++) {
-    var file = fileNames[i];
-    rm(file);
+    var fileName = fileNames[i];
+    rm(fileName);
     if (cleanOnly) continue;
-    var url = "https://raw.githubusercontent.com/R3ality/bitburner-scripts/master/" + file + ".js";
-    wget(url, file);
+    var fileUrl = "https://raw.githubusercontent.com/R3ality/bitburner-scripts/master/" + fileName;
+    wget(fileUrl, fileName);
 }
 
 tprint("SUCCESS: Environment initialization completed!");
