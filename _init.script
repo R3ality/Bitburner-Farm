@@ -20,6 +20,7 @@ var fileNames = [
   "_hack.script",
   "_hacknet-manage.js",
   "_monitor.script",
+  "_monitor-money.js",
   "_node-list.script",
   "_node-manage.script",
   "_node-purchase.script",

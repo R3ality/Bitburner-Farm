@@ -1,5 +1,7 @@
 // Farming script for exp gain
 
+//tail(); // DEBUG
+
 disableLog("sleep");
 disableLog("exec");
 

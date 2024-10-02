@@ -23,6 +23,7 @@ export async function main(ns) {
   let visited = [];
   let planned = ns.scan("home");
   let nuked = 0;
+  let alreadyNuked = 0;
 
   while (planned.length > 0) {
     let target = planned.pop();
@@ -43,7 +44,10 @@ export async function main(ns) {
     let levelRequired = ns.getServerRequiredHackingLevel(target);
 
     // Check if target is eligible
-    if (ns.hasRootAccess(target)) reasons.push("Target already rooted");
+    if (ns.hasRootAccess(target)) {
+      alreadyNuked++;
+      reasons.push("Target already rooted");
+    }
     else {
       if (levelRequired > ns.getHackingLevel()) {
         reasons.push("Requires Hacking level " + levelRequired);
@@ -79,5 +83,5 @@ export async function main(ns) {
     }
   }
 
-  ns.tprint("INFO: Finished crawling targets: " + visited.length + ". Nuked " + nuked);
+  ns.tprint("INFO: Finished crawling targets: " + visited.length + ". Nuked " + nuked + ", total " + alreadyNuked + " with root access");
 }

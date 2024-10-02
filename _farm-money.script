@@ -3,6 +3,8 @@
 // Inspiration, reference or copied sources:
 // https://github.com/blankcode/Bitburner-scripts/blob/master/replicator_fork/milk.script
 
+//tail(); // DEBUG
+
 disableLog("sleep");
 disableLog("getServerMoneyAvailable");
 disableLog("getServerSecurityLevel");
