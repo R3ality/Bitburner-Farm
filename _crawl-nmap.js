@@ -62,7 +62,7 @@ export async function main(ns) {
             "," + ns.getServerRequiredHackingLevel(target) +
             "," + Math.floor(ns.getServerMoneyAvailable(target)) +
             "," + moneyMax +
-            "," + Math.round(ns.getServerSecurityLevel(target)) + // This may lose a lot of precision but dont want to deal with the decimal separator
+            "," + Math.round(ns.getServerSecurityLevel(target)) + // This may lose a lot of precision but don't want to deal with the decimal separator
             "," + securityMin +
             "," + rateGrowth +
             "," + Math.round(timeHack) +

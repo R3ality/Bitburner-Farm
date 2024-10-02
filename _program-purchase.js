@@ -1,4 +1,4 @@
-// Proram manager for purchasing software tools off the darkweb
+// Program manager for purchasing software tools off the darkweb
 
 // Inspiration, reference or copied sources:
 // https://github.com/MercuriusXeno/BitBurnerScripts/blob/master/program-manager.js

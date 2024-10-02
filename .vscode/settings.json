@@ -1,5 +1,19 @@
 {
     "files.associations": {
         "*.script": "javascript"
-    }
+    },
+    "cSpell.words": [
+        "brutessh",
+        "darkweb",
+        "Deepscan",
+        "foodnstuff",
+        "ftpcrack",
+        "hacknet",
+        "httpworm",
+        "killall",
+        "nmap",
+        "relaysmtp",
+        "sqlinject",
+        "tprint"
+    ]
 }

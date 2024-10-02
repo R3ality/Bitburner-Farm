@@ -44,7 +44,7 @@ if (args.length > 0) {
     }
 }
 
-var name = "node"; // Prefix for server names. Numbers will be added automatically (eg. pserv-4)
+var name = "node"; // Prefix for server names. Numbers will be added automatically (eg. node-4)
 var confirm = false; // If purchases should be confirmed with user
 
 // Return nearest smaller power of 2 for the specified number
@@ -52,7 +52,7 @@ function getNearestSmallerPow2(n) {
     return Math.pow(2, Math.floor(Math.log(n) / Math.log(2)));
 }
 
-// Get the maximum amount of RAM we could affor for the server purchase
+// Get the maximum amount of RAM we could afford for the server purchase
 function getMaxAffordableRamAmount() {
     var money = getServerMoneyAvailable("home");
     var maxAffordableRam = Math.floor(money / costPerEachGb);
@@ -60,7 +60,7 @@ function getMaxAffordableRamAmount() {
     return getNearestSmallerPow2(maxAffordableRam);
 }
 
-// Get the name and ram amoun for the weakest server
+// Get the name and ram amount for the weakest server
 function getWeakestServer(servers) {
     var weakest = { hostname: null, ram: null };
     for (var i = 0; i < servers.length; i++) {
