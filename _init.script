@@ -3,37 +3,37 @@
 // Accept an argument to only clean existing scripts without downloading new ones
 var cleanOnly = false;
 if (args.length > 0) {
-    cleanOnly = true;
-    tprint("INFO: Cleaning environment only, not fetching new scripts..");
+  cleanOnly = true;
+  tprint("INFO: Cleaning environment only, not fetching new scripts..");
 }
 
 var fileNames = [
-    "_crawl-enslave.js",
-    "_crawl-fetch.js",
-    "_crawl-kill.js", 
-    "_crawl-nmap.js",
-    "_crawl-nuke.js",
-    "_enslave.script",
-    "_farm-exp.script",
-    "_farm-money.script",
-    "_grow.script",
-    "_hack.script",
-    "_hacknet-manage.js",
-    "_monitor.script",
-    "_node-list.script",
-    "_node-manage.script",
-    "_node-purchase.script",
-    "_prep.script",
-    "_program-purchase.js",
-    "_weak.script"
+  "_crawl-enslave.js",
+  "_crawl-fetch.js",
+  "_crawl-kill.js",
+  "_crawl-nmap.js",
+  "_crawl-nuke.js",
+  "_enslave.script",
+  "_farm-exp.script",
+  "_farm-money.script",
+  "_grow.script",
+  "_hack.script",
+  "_hacknet-manage.js",
+  "_monitor.script",
+  "_node-list.script",
+  "_node-manage.script",
+  "_node-purchase.script",
+  "_prep.script",
+  "_program-purchase.js",
+  "_weak.script"
 ];
 
 for (var i = 0; i < fileNames.length; i++) {
-    var fileName = fileNames[i];
-    rm(fileName);
-    if (cleanOnly) continue;
-    var fileUrl = "https://raw.githubusercontent.com/R3ality/bitburner-scripts/master/" + fileName;
-    wget(fileUrl, fileName);
+  var fileName = fileNames[i];
+  rm(fileName);
+  if (cleanOnly) continue;
+  var fileUrl = "https://raw.githubusercontent.com/R3ality/bitburner-scripts/master/" + fileName;
+  wget(fileUrl, fileName);
 }
 
 tprint("SUCCESS: Environment initialization completed!");

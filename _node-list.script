@@ -2,18 +2,20 @@
 
 var servers = getPurchasedServers();
 for (var i = 0; i < servers.length; i++) {
-    var server = servers[i];
-    var ram = getServerRam(server);
+  var server = servers[i];
+  var ramMax = getServerMaxRam(server);
+  var ramUsed = getServerUsedRam(server);
+  var ramFree = ramMax - ramUsed;
 
-    tprint("Node " +
-        String("           " + server).slice(-7) +
-        " RAM: " +
-        String("           " + nFormat(Math.round(ram[0]), '0,0')).slice(-9) +
-        " GB (total) " +
-        String("           " + nFormat(Math.round(ram[0] - ram[1]), '0,0')).slice(-9) +
-        " GB (free)" +
-        String("           " + ((ram[1] / ram[0]) * 100).toFixed(2)).slice(-6) +
-        "% (used)");
+  tprint("Node " +
+    String("           " + server).slice(-7) +
+    " RAM: " +
+    String("           " + nFormat(Math.round(ramMax), '0,0')).slice(-9) +
+    " GB (total) " +
+    String("           " + nFormat(Math.round(ramMax - ramUsed), '0,0')).slice(-9) +
+    " GB (free)" +
+    String("           " + ((ramUsed / ramMax) * 100).toFixed(2)).slice(-6) +
+    "% (used)");
 }
 
 tprint("INFO: Finished listing " + servers.length + " nodes");
